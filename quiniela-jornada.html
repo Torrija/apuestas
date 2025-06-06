@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seguimiento Quiniela - Peña Don Antonio Márquez</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css"> <!-- Estilos generales -->
+    <link rel="stylesheet" href="quiniela-jornada-style.css"> <!-- Estilos específicos de quiniela -->
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-logos">
+                <img src="images/logo_loterias_y_apuestas_estado.png" alt="Logo Loterías y Apuestas del Estado" class="logo">
+                <img src="images/logo_once.png" alt="Logo ONCE" class="logo">
+            </div>
+            <h1>Seguimiento Quiniela <br> Jornada <span id="jornadaNumber">--</span></h1>
+            <nav class="main-nav">
+                <a href="index.html" class="nav-button"><i class="fas fa-home"></i> Volver al Resumen</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="quiniela-jornada-details">
+            <h2>Partidos de la Jornada</h2>
+            <div class="matches-table-container">
+                <table class="matches-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Partido</th>
+                            <th>Horario</th>
+                            <th>Selección</th>
+                        </tr>
+                    </thead>
+                    <tbody id="matchesTableBody">
+                        <!-- Los partidos se cargarán aquí dinámicamente con JavaScript -->
+                        <tr><td colspan="4" class="loading-message">Cargando partidos...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="user-prediction-summary">
+            <h2>Tu Pronóstico y Aciertos</h2>
+            <div class="summary-cards">
+                <div class="card">
+                    <h3>Aciertos (1-14)</h3>
+                    <p id="totalCorrectMatches">0 / 14</p>
+                </div>
+                <div class="card">
+                    <h3>Acierto Pleno al 15</h3>
+                    <p id="pleno15Correct">--</p>
+                </div>
+                <div class="card highlight">
+                    <h3>Pronóstico Quiniela</h3>
+                    <p id="userPrediction">--</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="peña-bets-results">
+            <h2>Apuestas de la Peña (Jornada <span id="jornadaNumberBets">--</span>)</h2>
+            <p id="coincidenceSummary">Cargando apuestas de la peña...</p>
+            <div class="peña-bets-list" id="peñaBetsList">
+                <!-- Las apuestas coincidentes de la peña se cargarán aquí dinámicamente -->
+                <p class="loading-message">Selecciona los resultados de los partidos para ver las coincidencias.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Peña "Don Antonio Márquez". Informe Generado.</p>
+            <p>Este resguardo es informativo (no válido para reclamaciones)</p>
+        </div>
+    </footer>
+
+    <script src="quiniela-jornada-script.js"></script>
+</body>
+</html>
