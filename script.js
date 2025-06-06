@@ -143,6 +143,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     // Puedes añadir más detalles específicos para pagos aquí si la data.json lo permite
                     // Por ejemplo, para un premio de Primitiva, podrías mostrar la combinación ganadora si la tuvieras en el JSON
+                    // AÑADIR ESTAS LÍNEAS PARA PREMIOS ONCE ESPECÍFICOS
+                    if (bet.details.original_ticket_number) {
+                        detailsHtml += `<p>Cupón Ganador: <strong>${bet.details.original_ticket_number}</strong></p>`;
+                    }
+                    if (bet.details.original_ticket_serie) {
+                        detailsHtml += `<p>Serie: <strong>${bet.details.original_ticket_serie}</strong></p>`;
+                    }
+                    if (bet.details.prize_description) {
+                        detailsHtml += `<p>Tipo de Premio: <strong>${bet.details.prize_description}</strong></p>`;
+                    }
+                    if (bet.details.won_amount) {
+                            // El amount principal ya muestra el valor del premio, esto es redundante pero si lo quieres separado en los detalles
+                        detailsHtml += `<p>Importe Ganado: <strong>${formatCurrency(bet.details.won_amount)}</strong></p>`;
+                    }
+                    // FIN DE LAS LÍNEAS A AÑADIR
                 }
             }
 
