@@ -360,3 +360,44 @@ body {
 .summary-cards .card p.negative-balance {
     color: #dc3545; /* Rojo para balance negativo */
 }
+
+/* Estilos para el botón de descarga */
+.download-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 200px; /* Mantener la consistencia con los otros grupos */
+}
+
+.download-group label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.download-button {
+    background-color: #28a745; /* Color verde */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none; /* Quitar subrayado del enlace */
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espacio entre el icono y el texto */
+    transition: background-color 0.3s ease;
+    width: 100%; /* Ocupa todo el ancho disponible en su grupo */
+    justify-content: center; /* Centrar el contenido del botón */
+}
+
+.download-button:hover {
+    background-color: #218838; /* Verde más oscuro al pasar el ratón */
+}
+
+/* Ajustes responsive para el botón de descarga */
+@media (max-width: 768px) {
+    .download-group {
+        min-width: unset;
+        width: 100%; /* Ocupa todo el ancho en móviles */
+    }
+}
