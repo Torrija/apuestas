@@ -355,3 +355,8 @@ body {
         padding: 15px;
     }
 }
+
+/* Añadir este estilo al final de style.css */
+.summary-cards .card p.negative-balance {
+    color: #dc3545; /* Rojo para balance negativo */
+}

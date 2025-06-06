@@ -74,45 +74,78 @@ document.addEventListener('DOMContentLoaded', () => {
             const statusClass = bet.status;
 
             // Formatear la fecha del sorteo si existe
-            const drawDateDisplay = bet.draw_date ? `Sorteo: ${new Date(bet.draw_date).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}` : '';
-
-            // Generar detalles específicos del juego
-            let detailsHtml = '';
-            if (bet.game === "LOTERIA PRIMITIVA" || bet.game === "BONOLOTO" || bet.game === "GORDO PRIMITIVA" || bet.game === "EUROMILLONES") {
-                detailsHtml += `<h4>Números Jugados:</h4><ul>`;
-                bet.details.numbers_per_bet.forEach((nums, idx) => {
-                    detailsHtml += `<li>Apuesta ${idx + 1}: <strong>${nums.join(' ')}</strong></li>`;
-                });
-                detailsHtml += `</ul>`;
-                if (bet.details.reintegro !== undefined) {
-                    detailsHtml += `<p>Reintegro: <strong>${bet.details.reintegro}</strong></p>`;
+            // Algunas fechas pueden ser "06 JUN 2025" o "06 JUN 25"
+            let drawDateDisplay = '';
+            if (bet.draw_date) {
+                try {
+                    const formattedDate = parseDate(bet.draw_date).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase();
+                    drawDateDisplay = `Sorteo: ${formattedDate}`;
+                } catch (e) {
+                    console.warn(`Could not parse draw_date for bet ${bet.id}: ${bet.draw_date}`);
+                    drawDateDisplay = `Sorteo: ${bet.draw_date}`; // Fallback to raw string
                 }
-                if (bet.details.joker !== undefined) {
-                    detailsHtml += `<p>Joker: <strong>${bet.details.joker}</strong></p>`;
-                }
-                if (bet.details.el_millon_code) {
-                    detailsHtml += `<p>El Millón: <strong>${bet.details.el_millon_code}</strong></p>`;
-                }
-            } else if (bet.game === "QUINIELA") {
-                detailsHtml += `<h4>Pronósticos:</h4>`;
-                detailsHtml += `<p>Número de Apuestas: <strong>${bet.details.bets_count}</strong></p>`;
-                detailsHtml += `<p>Pleno al 15: <strong>${bet.details.match_15_pick}</strong></p>`;
-                detailsHtml += `<p><em>(Detalle de la cuadrícula simplificado para visualización. Ver ticket original para detalle completo.)</em></p>`;
-            } else if (bet.game.includes("LOTERIA NACIONAL")) {
-                detailsHtml += `<h4>Décimo:</h4>`;
-                detailsHtml += `<p>Número: <strong>${bet.details.number}</strong></p>`;
-                detailsHtml += `<p>Serie: <strong>${bet.details.serie}</strong></p>`;
-                detailsHtml += `<p>Fracción: <strong>${bet.details.fraccion}</strong></p>`;
-                detailsHtml += `<p>Precio por décimo: <strong>${bet.details.price_per_decimo}</strong></p>`;
-            } else if (bet.game.includes("CUPON")) {
-                detailsHtml += `<h4>Detalles del Cupón:</h4>`;
-                detailsHtml += `<p>Número: <strong>${bet.details.number}</strong></p>`;
-                detailsHtml += `<p>Serie: <strong>${bet.details.serie}</strong></p>`;
-                detailsHtml += `<p>Premio Máx: <strong>${bet.details.max_prize}</strong></p>`;
-            } else if (bet.type === 'pago') { // Detalles para premios generales si no se especifica el juego
-                detailsHtml += `<p>Apuestas Premiadas: <strong>${bet.details.won_bets}</strong></p>`;
-                detailsHtml += `<p>Origen: <strong>${bet.details.prize_source || 'Desconocido'}</strong></p>`;
             }
+
+
+            // Generar detalles específicos del juego o premio
+            let detailsHtml = '';
+            if (bet.type === 'venta') {
+                if (bet.game === "LOTERIA PRIMITIVA" || bet.game === "BONOLOTO" || bet.game === "GORDO PRIMITIVA" || bet.game === "EUROMILLONES") {
+                    if (bet.details && bet.details.numbers_per_bet) {
+                        detailsHtml += `<h4>Números Jugados:</h4><ul>`;
+                        bet.details.numbers_per_bet.forEach((nums, idx) => {
+                            detailsHtml += `<li>Apuesta ${idx + 1}: <strong>${nums.join(' ')}</strong></li>`;
+                        });
+                        detailsHtml += `</ul>`;
+                    } else {
+                        detailsHtml += `<p><em>No se encontraron detalles de números para esta venta.</em></p>`;
+                    }
+                    if (bet.details && bet.details.reintegro !== undefined) {
+                        detailsHtml += `<p>Reintegro: <strong>${bet.details.reintegro}</strong></p>`;
+                    }
+                    if (bet.details && bet.details.joker !== undefined) {
+                        detailsHtml += `<p>Joker: <strong>${bet.details.joker}</strong></p>`;
+                    }
+                    if (bet.details && bet.details.el_millon_code) {
+                        detailsHtml += `<p>El Millón: <strong>${bet.details.el_millon_code}</strong></p>`;
+                    }
+                } else if (bet.game === "QUINIELA") {
+                    detailsHtml += `<h4>Pronósticos:</h4>`;
+                    if (bet.details) {
+                        detailsHtml += `<p>Número de Apuestas: <strong>${bet.details.bets_count}</strong></p>`;
+                        detailsHtml += `<p>Pleno al 15: <strong>${bet.details.match_15_pick}</strong></p>`;
+                        detailsHtml += `<p><em>(Detalle de la cuadrícula simplificado para visualización. Ver ticket original para detalle completo.)</em></p>`;
+                    }
+                } else if (bet.game.includes("LOTERIA NACIONAL")) {
+                    detailsHtml += `<h4>Décimo:</h4>`;
+                    if (bet.details) {
+                        detailsHtml += `<p>Número: <strong>${bet.details.number}</strong></p>`;
+                        detailsHtml += `<p>Serie: <strong>${bet.details.serie}</strong></p>`;
+                        detailsHtml += `<p>Fracción: <strong>${bet.details.fraccion}</strong></p>`;
+                        detailsHtml += `<p>Precio por décimo: <strong>${bet.details.price_per_decimo}</strong></p>`;
+                    }
+                } else if (bet.game.includes("CUPON")) {
+                    detailsHtml += `<h4>Detalles del Cupón:</h4>`;
+                    if (bet.details) {
+                        detailsHtml += `<p>Número: <strong>${bet.details.number}</strong></p>`;
+                        detailsHtml += `<p>Serie: <strong>${bet.details.serie}</strong></p>`;
+                        detailsHtml += `<p>Premio Máx: <strong>${bet.details.max_prize}</strong></p>`;
+                    }
+                }
+            } else if (bet.type === 'pago') { // Manejo de detalles para premios
+                detailsHtml += `<h4>Detalles del Premio:</h4>`;
+                if (bet.details) {
+                    if (bet.details.won_bets !== undefined) {
+                        detailsHtml += `<p>Apuestas Premiadas: <strong>${bet.details.won_bets}</strong></p>`;
+                    }
+                    if (bet.details.prize_source) {
+                        detailsHtml += `<p>Origen: <strong>${bet.details.prize_source}</strong></p>`;
+                    }
+                    // Puedes añadir más detalles específicos para pagos aquí si la data.json lo permite
+                    // Por ejemplo, para un premio de Primitiva, podrías mostrar la combinación ganadora si la tuvieras en el JSON
+                }
+            }
+
 
             betCard.innerHTML = `
                 <div class="bet-card-header-logos">
@@ -159,16 +192,14 @@ document.addEventListener('DOMContentLoaded', () => {
         totalWonElem.textContent = formatCurrency(totalWon);
         netBalanceElem.textContent = formatCurrency(netBalance);
 
+        // Actualizar la clase para el estilo de balance
         if (netBalance < 0) {
             netBalanceElem.classList.remove('highlight');
-            netBalanceElem.classList.add('negative-balance'); // Puedes añadir un estilo rojo si es negativo
+            netBalanceElem.classList.add('negative-balance');
         } else {
             netBalanceElem.classList.add('highlight');
             netBalanceElem.classList.remove('negative-balance');
         }
-
-        // Estilos para el balance negativo (añadir al CSS)
-        // .summary-cards .card p.negative-balance { color: #dc3545; }
     }
 
     // --- Gráficos (Chart.js) ---
@@ -237,10 +268,24 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. Ordenación
         const sortOption = sortBySelect.value;
         filteredBets.sort((a, b) => {
+            let dateA, dateB;
+            try {
+                dateA = parseDate(a.date_transaction);
+            } catch (e) {
+                console.warn(`Could not parse date_transaction for bet ${a.id}: ${a.date_transaction}`);
+                dateA = new Date(0); // Fallback to epoch start for sorting if date is unparseable
+            }
+            try {
+                dateB = parseDate(b.date_transaction);
+            } catch (e) {
+                console.warn(`Could not parse date_transaction for bet ${b.id}: ${b.date_transaction}`);
+                dateB = new Date(0);
+            }
+
             if (sortOption === 'date_transaction_asc') {
-                return parseDate(a.date_transaction) - parseDate(b.date_transaction);
+                return dateA - dateB;
             } else if (sortOption === 'date_transaction_desc') {
-                return parseDate(b.date_transaction) - parseDate(a.date_transaction);
+                return dateB - dateA;
             } else if (sortOption === 'amount_asc') {
                 return a.amount - b.amount;
             } else if (sortOption === 'amount_desc') {
@@ -284,6 +329,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             console.error("Error al cargar los datos:", error);
             betListContainer.innerHTML = '<p class="loading-message error-message">Error al cargar los datos. Por favor, intente de nuevo más tarde.</p>';
+            // Add negative balance style to CSS if it's not already there for safety
+            const style = document.createElement('style');
+            style.textContent = `.summary-cards .card p.negative-balance { color: #dc3545; }`;
+            document.head.appendChild(style);
         }
     }
 
