@@ -1,0 +1,275 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const jornadaNumberElem = document.getElementById('jornadaNumber');
+    const jornadaNumberBetsElem = document.getElementById('jornadaNumberBets');
+    const matchesTableBody = document.getElementById('matchesTableBody');
+    const totalCorrectMatchesElem = document.getElementById('totalCorrectMatches');
+    const pleno15CorrectElem = document.getElementById('pleno15Correct');
+    const userPredictionElem = document.getElementById('userPrediction');
+    const coincidenceSummaryElem = document.getElementById('coincidenceSummary');
+    const peñaBetsList = document.getElementById('peñaBetsList');
+
+    let jornadaData = null; // Datos de los partidos de la jornada
+    let peñaBets = [];    // Apuestas de la peña
+    let userSelections = Array(16).fill(null); // Array para almacenar la selección del usuario (14 partidos + 2 para Pleno al 15)
+
+    // --- Funciones de Utilidad ---
+
+    // Función para limpiar la tabla de partidos
+    function clearMatchesTable() {
+        matchesTableBody.innerHTML = '<tr><td colspan="4" class="loading-message">Cargando partidos...</td></tr>';
+    }
+
+    // Función para actualizar el resumen del pronóstico del usuario
+    function updateUserPredictionDisplay() {
+        const mainPicks = userSelections.slice(0, 14).map(s => s === null ? '-' : s).join('');
+        const pleno15Picks = userSelections[14] !== null && userSelections[15] !== null ?
+                              `<span class="pleno15-user-scores">(${userSelections[14]}-${userSelections[15]})</span>` : '';
+        userPredictionElem.innerHTML = mainPicks + pleno15Picks;
+    }
+
+    // Compara la selección del usuario con una apuesta de la peña
+    function compareBets(userBet, peñaBet) {
+        let correctMatches = 0;
+        let pleno15Correct = false;
+        let matchesDetail = []; // Para resaltar aciertos
+
+        for (let i = 0; i < 14; i++) { // Partidos del 1 al 14
+            if (userBet[i] !== null && userBet[i] === peñaBet[i]) {
+                correctMatches++;
+                matchesDetail.push({ pick: peñaBet[i], correct: true });
+            } else {
+                matchesDetail.push({ pick: peñaBet[i], correct: false });
+            }
+        }
+
+        // Pleno al 15 (Partido 15: local y visitante)
+        if (userBet[14] !== null && userBet[15] !== null &&
+            userBet[14] === peñaBet[14] && userBet[15] === peñaBet[15]) {
+            pleno15Correct = true;
+        }
+
+        return { correctMatches, pleno15Correct, matchesDetail };
+    }
+
+    // --- Funciones de Renderizado ---
+
+    // Renderiza la tabla de partidos y los botones de selección
+    function renderMatchesTable(data) {
+        jornadaNumberElem.textContent = data.jornada_number;
+        jornadaNumberBetsElem.textContent = data.jornada_number;
+        matchesTableBody.innerHTML = ''; // Limpiar mensaje de carga
+
+        data.matches.forEach((match, index) => {
+            const row = document.createElement('tr');
+            let selectionButtonsHtml = '';
+
+            if (index < 14) { // Partidos 1-14 (1X2)
+                selectionButtonsHtml = `
+                    <div class="selection-buttons-group" data-match-id="${match.id}">
+                        <button class="selection-button" data-pick="1">1</button>
+                        <button class="selection-button" data-pick="X">X</button>
+                        <button class="selection-button" data-pick="2">2</button>
+                    </div>
+                `;
+            } else { // Partido 15 (Pleno al 15 - Goles)
+                selectionButtonsHtml = `
+                    <div class="pleno15-selection">
+                        <div class="score-group">
+                            <label>${match.home_team}</label>
+                            <div class="score-buttons-group" data-match-id="${match.id}" data-team="home">
+                                <button class="selection-button" data-pick="0">0</button>
+                                <button class="selection-button" data-pick="1">1</button>
+                                <button class="selection-button" data-pick="2">2</button>
+                                <button class="selection-button" data-pick="M">M</button>
+                            </div>
+                        </div>
+                        <div class="score-group">
+                            <label>${match.away_team}</label>
+                            <div class="score-buttons-group" data-match-id="${match.id}" data-team="away">
+                                <button class="selection-button" data-pick="0">0</button>
+                                <button class="selection-button" data-pick="1">1</button>
+                                <button class="selection-button" data-pick="2">2</button>
+                                <button class="selection-button" data-pick="M">M</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            row.innerHTML = `
+                <td>${match.id}</td>
+                <td>${match.home_team} - ${match.away_team}</td>
+                <td>${match.day_time}</td>
+                <td>${selectionButtonsHtml}</td>
+            `;
+            matchesTableBody.appendChild(row);
+        });
+
+        // Añadir listeners a todos los botones de selección
+        matchesTableBody.querySelectorAll('.selection-button').forEach(button => {
+            button.addEventListener('click', handleSelectionClick);
+        });
+    }
+
+    // Manejador de clic para botones de selección
+    function handleSelectionClick(event) {
+        const button = event.target.closest('.selection-button'); // Asegura que el click sea en el botón
+        if (!button) return;
+
+        const pick = button.dataset.pick;
+        const matchId = parseInt(button.closest('[data-match-id]').dataset.matchId);
+        const team = button.closest('[data-team]') ? button.closest('[data-team]').dataset.team : null;
+
+        // Desactivar selecciones previas en el mismo grupo
+        let parentGroup;
+        if (team) { // Pleno al 15
+            parentGroup = button.closest('.score-buttons-group');
+            if (team === 'home') {
+                userSelections[14] = pick;
+            } else if (team === 'away') {
+                userSelections[15] = pick;
+            }
+        } else { // Partidos 1-14
+            parentGroup = button.closest('.selection-buttons-group');
+            userSelections[matchId - 1] = pick;
+        }
+
+        parentGroup.querySelectorAll('.selection-button').forEach(btn => {
+            btn.classList.remove('selected');
+        });
+        button.classList.add('selected');
+
+        updateUserPredictionDisplay();
+        calculateAndDisplayPeñaResults();
+    }
+
+
+    // Calcula y muestra los resultados de las apuestas de la peña
+    function calculateAndDisplayPeñaResults() {
+        if (!jornadaData || !peñaBets || userSelections.slice(0,14).some(s => s === null)) {
+            // No calcular si no hay datos cargados o si faltan pronósticos para los 14 partidos
+            pleno15CorrectElem.textContent = '--';
+            totalCorrectMatchesElem.textContent = `0 / 14`;
+            peñaBetsList.innerHTML = '<p class="loading-message">Selecciona los resultados de los 14 partidos para ver las coincidencias.</p>';
+            coincidenceSummaryElem.textContent = '';
+            return;
+        }
+
+        if (userSelections[14] === null || userSelections[15] === null) {
+            pleno15CorrectElem.textContent = '--';
+        }
+
+        let betsWithResults = [];
+        let totalHits = 0;
+        let hitsCount = {}; // Para el resumen (ej. {10: 5, 11: 2})
+
+        peñaBets.forEach((peñaBet, index) => {
+            const { correctMatches, pleno15Correct, matchesDetail } = compareBets(userSelections, peñaBet);
+            betsWithResults.push({
+                originalBet: peñaBet,
+                correctMatches,
+                pleno15Correct,
+                matchesDetail,
+                id: `bet_${index}` // ID para identificar la apuesta
+            });
+            totalHits += correctMatches;
+
+            // Contar aciertos para el resumen
+            hitsCount[correctMatches] = (hitsCount[correctMatches] || 0) + 1;
+        });
+
+        // Ordenar por aciertos (descendente) y luego por Pleno al 15 (los que aciertan primero)
+        betsWithResults.sort((a, b) => {
+            if (a.pleno15Correct && !b.pleno15Correct) return -1;
+            if (!a.pleno15Correct && b.pleno15Correct) return 1;
+            return b.correctMatches - a.correctMatches;
+        });
+
+        // Mostrar aciertos del usuario
+        totalCorrectMatchesElem.textContent = `${betsWithResults[0].correctMatches} / 14`;
+        pleno15CorrectElem.textContent = betsWithResults[0].pleno15Correct ? '¡Acertado!' : 'No';
+
+        // Renderizar las apuestas de la peña
+        peñaBetsList.innerHTML = '';
+        coincidenceSummaryElem.innerHTML = '<strong>Resumen de Aciertos de la Peña:</strong>';
+        const sortedHits = Object.keys(hitsCount).map(Number).sort((a, b) => b - a); // Ordenar de más a menos aciertos
+        sortedHits.forEach(hits => {
+            coincidenceSummaryElem.innerHTML += `<br>${hitsCount[hits]} ${hitsCount[hits] === 1 ? 'apuesta' : 'apuestas'} con <strong>${hits} aciertos</strong>.`;
+        });
+        if (userSelections[14] !== null && userSelections[15] !== null) { // Si el pleno al 15 está completo
+             const pleno15Bets = betsWithResults.filter(b => b.pleno15Correct);
+             if (pleno15Bets.length > 0) {
+                 coincidenceSummaryElem.innerHTML += `<br>¡<strong>${pleno15Bets.length}</strong> ${pleno15Bets.length === 1 ? 'apuesta' : 'apuestas'} han acertado el Pleno al 15!`;
+             }
+         }
+
+
+        // Mostrar solo las primeras 10 (o todas si son menos) que tienen algún acierto significativo
+        const betsToRender = betsWithResults.filter(b => b.correctMatches > 0 || b.pleno15Correct).slice(0, 10);
+
+        if (betsToRender.length === 0) {
+             peñaBetsList.innerHTML = '<p class="loading-message">Ninguna apuesta de la peña coincide significativamente con tu pronóstico.</p>';
+        } else {
+            betsToRender.forEach(betResult => {
+                const card = document.createElement('div');
+                card.className = 'peña-bet-card';
+
+                const hitsTagClass = betResult.pleno15Correct ? 'pleno15-tag' : ''; // Clase para cambiar color si acierta pleno al 15
+                const currentHitsTag = `<div class="hits-tag ${hitsTagClass}">${betResult.correctMatches} Aciertos</div>`;
+
+                let combinedPredictionHtml = '';
+                betResult.matchesDetail.forEach((detail, idx) => {
+                    if (idx < 14) { // Partidos 1-14
+                        combinedPredictionHtml += `<span class="${detail.correct ? 'bet-result-highlight' : ''}">${detail.pick}</span>`;
+                    }
+                });
+
+                // Añadir Pleno al 15
+                combinedPredictionHtml += `<span class="${betResult.pleno15Correct ? 'bet-pleno15-highlight' : ''}">(${betResult.originalBet[14]}-${betResult.originalBet[15]})</span>`;
+
+
+                card.innerHTML = `
+                    <h3>Apuesta de la Peña</h3>
+                    ${currentHitsTag}
+                    <p class="bet-combination">${combinedPredictionHtml}</p>
+                    <div class="bet-stats">
+                        <p>Aciertos (1-14): <span class="aciertos-count">${betResult.correctMatches}</span></p>
+                        <p>Pleno al 15: <span class="pleno-15-status">${betResult.pleno15Correct ? '¡Acertado!' : 'No acertado'}</span></p>
+                    </div>
+                `;
+                peñaBetsList.appendChild(card);
+            });
+        }
+    }
+
+
+    // --- Inicialización ---
+
+    async function initializeQuinielaPage() {
+        clearMatchesTable(); // Mostrar mensaje de carga inicial
+
+        try {
+            // Cargar datos de los partidos de la jornada
+            const jornadaResponse = await fetch('quiniela_jornada_66.json');
+            if (!jornadaResponse.ok) throw new Error(`HTTP error! status: ${jornadaResponse.status} for quiniela_jornada_66.json`);
+            jornadaData = await jornadaResponse.json();
+
+            // Cargar apuestas de la peña
+            const peñaBetsResponse = await fetch('quiniela_bets_jornada_66.json');
+            if (!peñaBetsResponse.ok) throw new Error(`HTTP error! status: ${peñaBetsResponse.status} for quiniela_bets_jornada_66.json`);
+            peñaBets = await peñaBetsResponse.json();
+
+            renderMatchesTable(jornadaData);
+            updateUserPredictionDisplay(); // Inicializar con pronóstico vacío
+            calculateAndDisplayPeñaResults(); // Inicializar con resultados de la peña (sin aciertos al principio)
+
+        } catch (error) {
+            console.error("Error al cargar los datos de la Quiniela:", error);
+            matchesTableBody.innerHTML = '<tr><td colspan="4" class="loading-message error-message">Error al cargar los datos de la Quiniela.</td></tr>';
+            peñaBetsList.innerHTML = '<p class="loading-message error-message">Error al cargar las apuestas de la peña.</p>';
+        }
+    }
+
+    // Iniciar la aplicación de la página de Quiniela
+    initializeQuinielaPage();
+});
