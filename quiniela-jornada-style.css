@@ -264,16 +264,18 @@
     gap: 5px; /* Espacio entre los picks y el icono final */
 }
 
-/* Ajustes para los spans de los picks (para que se muestren bien inline) */
+/* Ajustes para los spans de los picks (para que se muestren bien inline y con fondo) */
 .peña-bet-card .bet-result-highlight,
 .peña-bet-card .bet-result-unselected,
 .peña-bet-card .bet-result-incorrect,
-.peña-bet-card .bet-pleno15-highlight { /* Aplicar a todas las clases de resaltado */
-    display: inline-block; /* Crucial para que el padding y background se apliquen correctamente */
-    padding: 2px 4px; /* Aumentar el padding horizontal */
-    border-radius: 3px;
-    margin: 0 1px; /* Pequeño margen entre signos para que no se peguen tanto */
-    white-space: nowrap; /* Evita que los picks se separen en líneas diferentes */
+.peña-bet-card .bet-pleno15-highlight {
+    display: inline-block; /* Asegura que el padding y background funcionen */
+    padding: 3px 6px; /* Más padding para que el fondo sea visible */
+    border-radius: 4px; /* Un poco más redondeado */
+    margin: 0 2px; /* Espacio entre los signos */
+    white-space: nowrap;
+    line-height: 1.2; /* Para una altura de línea consistente */
+    vertical-align: middle; /* Ayuda a alinear verticalmente si hay iconos */
 }
 
 .peña-bet-card .bet-result-highlight {
@@ -347,7 +349,11 @@
     }
 
     .peña-bets-list {
-        grid-template-columns: 1fr;
+        /* Mantenemos el grid display para los grupos de aciertos */
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+        justify-content: center; /* ESTO YA ESTÁ BIEN */
     }
     .selection-button {
         padding: 6px 10px;
@@ -394,4 +400,13 @@
     .aciertos-summary-table {
         font-size: 0.75em;
     }
+}
+
+/* Nuevo estilo para el contenedor que centra la lista de apuestas */
+.peña-bets-list-container {
+    display: flex; /* Usamos flexbox para centrar su contenido */
+    justify-content: center; /* Centra horizontalmente los elementos hijos */
+    /* max-width puede ser opcional si quieres un ancho máximo para el área de las cartas */
+    /* max-width: 1000px; */
+    /* margin: 0 auto; */ /* No necesario si el padre es un flex container centrado */
 }
