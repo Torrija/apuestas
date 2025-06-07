@@ -70,3 +70,21 @@
         grid-template-columns: 1fr; /* Una columna en móviles */
     }
 }
+
+/* Estilos para el enlace de administración en el footer */
+.site-footer .admin-link {
+    color: #bbb; /* Gris claro, similar al texto del footer */
+    text-decoration: none; /* Sin subrayado por defecto */
+    font-size: 0.85em; /* Tamaño de fuente ligeramente más pequeño */
+    margin-bottom: 10px; /* Separación del texto de copyright */
+    display: block; /* Para que ocupe su propia línea */
+    transition: color 0.3s ease;
+}
+
+.site-footer .admin-link:hover {
+    color: #fff; /* Blanco al pasar el ratón para destacar */
+}
+
+.site-footer .admin-link .fas {
+    margin-right: 5px; /* Espacio entre icono y texto */
+}
