@@ -96,57 +96,60 @@ const firebaseConfig = {
         });
     }
 
-    // Cargar y mostrar comentarios existentes
-    async function loadExistingComments() {
-        existingCommentsList.innerHTML = '<p class="loading-message">Cargando comentarios...</p>';
-        try {
-            // Ordenar por fecha, los más recientes primero
-            const snapshot = await commentsCollection.orderBy('fecha', 'desc').get();
-            const comments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+// Cargar y mostrar comentarios existentes
+async function loadExistingComments() {
+    existingCommentsList.innerHTML = '<p class="loading-message">Cargando comentarios...</p>';
+    try {
+        // Ordenar por fecha, los más recientes primero
+        const snapshot = await commentsCollection.orderBy('fecha', 'desc').get();
+        const comments = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-            existingCommentsList.innerHTML = '';
-            if (comments.length === 0) {
-                existingCommentsList.innerHTML = '<p>No hay comentarios registrados.</p>';
-                return;
-            }
-
-            comments.forEach(comment => {
-                const commentCard = document.createElement('div');
-                commentCard.className = 'admin-comment-card'; // Clase específica para admin
-                commentCard.dataset.id = comment.id; // Guardar ID para editar/eliminar
-
-                commentCard.innerHTML = `
-                    <div class="comment-header">
-                        <h4>${comment.titulo}</h4>
-                        <div class="comment-actions">
-                            <button class="edit-comment-button button-action" data-id="${comment.id}" 
-                                data-title="${comment.titulo}" data-content="${escapeHtml(comment.contenido)}">
-                                <i class="fas fa-edit"></i> Editar
-                            </button>
-                            <button class="delete-comment-button button-action button-danger" data-id="${comment.id}">
-                                <i class="fas fa-trash-alt"></i> Eliminar
-                            </button>
-                        </div>
-                    </div>
-                    <div class="comment-content-preview">${comment.contenido}</div>
-                    <p class="comment-date">ID: ${comment.id} | Publicado: ${formatFirestoreTimestamp(comment.fecha)}</p>
-                `;
-                existingCommentsList.appendChild(commentCard);
-            });
-
-            // Añadir listeners a los botones de editar y eliminar
-            existingCommentsList.querySelectorAll('.edit-comment-button').forEach(button => {
-                button.addEventListener('click', startEditComment);
-            });
-            existingCommentsList.querySelectorAll('.delete-comment-button').forEach(button => {
-                button.addEventListener('click', deleteComment);
-            });
-
-        } catch (error) {
-            console.error("Error al cargar comentarios existentes:", error);
-            existingCommentsList.innerHTML = '<p class="error-message">Error al cargar comentarios.</p>';
+        existingCommentsList.innerHTML = '';
+        if (comments.length === 0) {
+            existingCommentsList.innerHTML = '<p>No hay comentarios registrados.</p>';
+            return;
         }
+
+        comments.forEach(comment => {
+            const commentCard = document.createElement('div');
+            commentCard.className = 'admin-comment-card'; // Clase específica para admin
+            commentCard.dataset.id = comment.id; // Guardar ID para editar/eliminar
+
+            // Usamos encodeURIComponent para el contenido que va a data-content
+            // Y pasamos el titulo directamente, ya que un titulo no suele tener HTML peligroso
+            commentCard.innerHTML = `
+                <div class="comment-header">
+                    <h4>${comment.titulo}</h4>
+                    <div class="comment-actions">
+                        <button class="edit-comment-button button-action" data-id="${comment.id}" 
+                            data-title="${encodeURIComponent(comment.titulo)}" 
+                            data-content="${encodeURIComponent(comment.contenido)}">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="delete-comment-button button-action button-danger" data-id="${comment.id}">
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                        </button>
+                    </div>
+                </div>
+                <div class="comment-content-preview">${comment.contenido}</div>
+                <p class="comment-date">ID: ${comment.id} | Publicado: ${formatFirestoreTimestamp(comment.fecha)}</p>
+            `;
+            existingCommentsList.appendChild(commentCard);
+        });
+
+        // Añadir listeners a los botones de editar y eliminar
+        existingCommentsList.querySelectorAll('.edit-comment-button').forEach(button => {
+            button.addEventListener('click', startEditComment);
+        });
+        existingCommentsList.querySelectorAll('.delete-comment-button').forEach(button => {
+            button.addEventListener('click', deleteComment);
+        });
+
+    } catch (error) {
+        console.error("Error al cargar comentarios existentes:", error);
+        existingCommentsList.innerHTML = '<p class="error-message">Error al cargar comentarios.</p>';
     }
+}
 
     // Helper para escapar HTML para atributos data-
     // Convierte caracteres especiales HTML a sus entidades.
@@ -166,16 +169,17 @@ const firebaseConfig = {
         return doc.documentElement.textContent;
     }
 
-    // Iniciar edición
+    // Helper para desescapar HTML (para rellenar textarea)
+    // Ahora usa decodeURIComponent para el contenido de los data-atributos
     function startEditComment(event) {
         const button = event.target.closest('.edit-comment-button');
         const commentId = button.dataset.id;
-        const commentTitle = button.dataset.title;
-        const commentContent = button.dataset.content; // Ya viene escapado
+        const commentTitle = decodeURIComponent(button.dataset.title); // Desescapar aquí
+        const commentContent = decodeURIComponent(button.dataset.content); // Desescapar aquí
 
         // Rellenar el formulario de añadir/editar
         commentTitleInput.value = commentTitle;
-        commentContentTextarea.value = unescapeHtml(commentContent); // Desescapar para el textarea
+        commentContentTextarea.value = commentContent; // Ya viene correctamente desescapado
         addCommentForm.dataset.editingId = commentId; // Guardar el ID que estamos editando
         addCommentMessage.textContent = 'Editando comentario...';
         addCommentMessage.style.color = 'blue';

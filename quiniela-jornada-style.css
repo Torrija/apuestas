@@ -405,7 +405,7 @@
 /* Nuevo estilo para el contenedor que centra la lista de apuestas */
 .peña-bets-list-container {
     display: flex; /* Usamos flexbox para centrar su contenido */
-    justify-content: center; /* Centra horizontalmente los elementos hijos */
+    /*justify-content: center;  Centra horizontalmente los elementos hijos */
     /* max-width puede ser opcional si quieres un ancho máximo para el área de las cartas */
     /* max-width: 1000px; */
     /* margin: 0 auto; */ /* No necesario si el padre es un flex container centrado */
