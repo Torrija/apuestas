@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentarios - Peña Don Antonio Márquez</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css"> <!-- Estilos generales -->
+    <link rel="stylesheet" href="comentarios-style.css"> <!-- Estilos específicos de comentarios -->
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="header-logos">
+                <img src="images/logo_loterias_y_apuestas_estado.png" alt="Logo Loterías y Apuestas del Estado" class="logo">
+                <img src="images/logo_once.png" alt="Logo ONCE" class="logo">
+            </div>
+            <h1>Comentarios de la Peña</h1>
+            <nav class="main-nav">
+                <a href="index.html" class="nav-button"><i class="fas fa-home"></i> Volver al Resumen</a>
+                <a href="quiniela-jornada.html" class="nav-button"><i class="fas fa-futbol"></i> Seguimiento Quiniela</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="comments-controls">
+            <h2>Gestión de Comentarios</h2>
+            <div class="filter-sort-group">
+                <div class="sort-group">
+                    <label for="sortCommentsBy">Ordenar por:</label>
+                    <select id="sortCommentsBy">
+                        <option value="fecha_desc">Fecha (más reciente)</option>
+                        <option value="fecha_asc">Fecha (más antigua)</option>
+                        <option value="titulo_asc">Título (A-Z)</option>
+                        <option value="titulo_desc">Título (Z-A)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="comments-list" id="commentsList">
+            <!-- Los comentarios se cargarán aquí dinámicamente con JavaScript -->
+            <p class="loading-message">Cargando comentarios...</p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>© 2025 Peña "Don Antonio Márquez". Informe Generado.</p>
+            <p>Este resguardo es informativo (no válido para reclamaciones)</p>
+        </div>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    
+    <script src="comentarios-script.js"></script>
+</body>
+</html>
