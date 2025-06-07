@@ -356,3 +356,133 @@
         font-size: 0.75em;
     }
 }
+
+/* Estilos para la tabla de Aciertos Signos (1X2) */
+.aciertos-summary-table th {
+    font-size: 0.8em; /* Ajuste para encabezados */
+    padding: 8px 3px; /* Más compacto */
+}
+.aciertos-summary-table td {
+    font-size: 1.1em; /* Un poco más grande para los datos */
+}
+.aciertos-summary-table td:nth-child(2), /* Aciertos */
+.aciertos-summary-table td:nth-child(3) { /* Nº Ap. */
+    font-weight: bold;
+    color: #004D99;
+}
+.aciertos-summary-table td:nth-child(4) { /* % */
+    color: #28a745;
+    font-weight: bold;
+}
+
+/* Estilos para el Pleno al 15 en la tarjeta de resumen */
+#pleno15Correct {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: #f7921a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+#pleno15Correct .fas {
+    font-size: 0.8em; /* Ajuste del icono para que no sea demasiado grande */
+}
+#pleno15Correct .fa-trophy { color: #f2c75a; } /* Color oro para trofeo */
+#pleno15Correct .fa-times-circle { color: #dc3545; } /* Color rojo para fallo */
+#pleno15Correct .fa-question-circle { color: #6c757d; } /* Color gris para no completado */
+
+
+/* Estilos para el nuevo formato de Apuestas de la Peña (agrupadas) */
+.peña-bets-list {
+    /* Mantenemos el grid display para los grupos de aciertos */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Los contenedores de grupo son las celdas del grid */
+}
+
+.peña-bet-group-card {
+    background-color: #fcfcfc;
+    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.08);
+    text-align: left;
+}
+
+.peña-bet-group-card h3 {
+    color: #004D99;
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.peña-bet-group-card h3 .correct-icon-title {
+    color: #28a745; /* Verde para el icono de acierto en el título del grupo */
+    font-size: 1em;
+}
+
+.bets-in-group {
+    /* Contenedor de las líneas de apuesta dentro del grupo */
+    max-height: 300px; /* Limitar altura si hay muchas apuestas en un grupo */
+    overflow-y: auto; /* Scroll si el contenido excede la altura */
+    padding-right: 5px; /* Espacio para la barra de scroll */
+}
+
+.bet-combination-line {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1em;
+    letter-spacing: 1px;
+    word-wrap: break-word;
+    line-height: 1.6;
+    margin-bottom: 5px;
+    display: flex; /* Para alinear picks e iconos */
+    align-items: center;
+    gap: 5px; /* Espacio entre los picks y el icono final */
+}
+
+/* Ajustes para los spans de los picks (para que se muestren bien inline) */
+.bet-combination-line span {
+    display: inline-block;
+}
+
+/* Iconos de Acierto/Fallo en las líneas de apuesta */
+.bet-icons-summary .fas {
+    font-size: 0.9em;
+}
+.bet-icons-summary .pleno15-icon-correct {
+    color: #f2c75a; /* Trofeo oro */
+}
+.bet-icons-summary .pleno15-icon-incorrect {
+    color: #dc3545; /* Cruz roja */
+}
+
+/* Asegurar que el mensaje de carga en la lista de la peña no se vea como tarjeta */
+.peña-bets-list > p.loading-message {
+    grid-column: 1 / -1; /* Ocupar todo el ancho del grid */
+    background: none;
+    box-shadow: none;
+    padding: 20px 0;
+    margin-top: 0;
+    text-align: center;
+    font-style: italic;
+    color: #888;
+}
+
+/* Responsive adjustments for new elements */
+@media (max-width: 768px) {
+    .peña-bets-list {
+        grid-template-columns: 1fr;
+    }
+    .aciertos-summary-table {
+        font-size: 0.8em;
+    }
+}
+@media (max-width: 480px) {
+    .aciertos-summary-table {
+        font-size: 0.7em;
+    }
+    .aciertos-summary-table th, .aciertos-summary-table td {
+        padding: 5px 2px;
+    }
+}

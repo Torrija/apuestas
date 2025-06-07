@@ -49,8 +49,10 @@
             <h2>Tu Pronóstico y Aciertos</h2>
             <div class="summary-cards">
                 <div class="card">
-                    <h3>Aciertos (1-14)</h3>
-                    <p id="totalCorrectMatches">0 / 14</p>
+                    <!-- Eliminado el h3 original, ahora el script lo generará -->
+                    <div id="totalCorrectMatches">
+                        <!-- Contenido generado por JS -->
+                    </div>
                 </div>
                 <div class="card">
                     <h3>Acierto Pleno al 15</h3>
@@ -65,7 +67,7 @@
 
         <section class="peña-bets-results">
             <h2>Apuestas de la Peña (Jornada <span id="jornadaNumberBets">--</span>)</h2>
-            <p id="coincidenceSummary">Cargando apuestas de la peña...</p>
+            <p id="coincidenceSummary">Apuestas de la Peña agrupadas por aciertos:</p>
             <div class="peña-bets-list" id="peñaBetsList">
                 <!-- Las apuestas coincidentes de la peña se cargarán aquí dinámicamente -->
                 <p class="loading-message">Selecciona los resultados de los partidos para ver las coincidencias.</p>
