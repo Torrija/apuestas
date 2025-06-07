@@ -302,7 +302,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const pleno15VisitantPick = betResult.matchesDetail[15].pick;
 
                     combinedPredictionHtml += `<span class="pleno15-scores-display">`;
-                    combinedPredictionHtml += `<span class="${pleno15LocalStatus === 'correct' ? 'bet-pleno15-highlight' : (pleno15LocalStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${plano15LocalPick}</span>`;
+                    combinedPredictionHtml += `<span class="${pleno15LocalStatus === 'correct' ? 'bet-pleno15-highlight' : (pleno15LocalStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${pleno15LocalPick}</span>`; // CORRECCIÓN APLICADA AQUÍ
                     combinedPredictionHtml += `-`;
                     combinedPredictionHtml += `<span class="${pleno15VisitantStatus === 'correct' ? 'bet-pleno15-highlight' : (pleno15VisitantStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${pleno15VisitantPick}</span>`; 
                     combinedPredictionHtml += `</span>`;
