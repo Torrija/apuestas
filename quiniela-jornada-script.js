@@ -167,7 +167,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const userPicksMadeCount = userSelections.slice(0, 14).filter(s => s !== null).length;
 
         if (userPicksMadeCount === 0) {
-            totalCorrectMatchesElem.innerHTML = `0 / 14`;
+            // ORIGINAL CONTENT: totalCorrectMatchesElem.innerHTML = `0 / 14`;
+            totalCorrectMatchesElem.innerHTML = `<h3>Aciertos (1-14)</h3><p>Selecciona partidos para ver el desglose.</p>`; // Modified for new layout
             pleno15CorrectElem.textContent = '--';
             peñaBetsList.innerHTML = '<p class="loading-message">Selecciona los resultados de los partidos para ver las coincidencias.</p>';
             coincidenceSummaryElem.textContent = 'Apuestas de la Peña:';
@@ -193,18 +194,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         // --- Actualizar el resumen del pronóstico del usuario (Aciertos (1-14) card) ---
-        let aciertosHtml = '<h3>Aciertos (1-14)</h3>';
+        // NEW TABLE FORMAT FOR ACIERTOS (1-14)
+        let aciertosTableHtml = `
+            <h3>Aciertos (1-14)</h3>
+            <table class="aciertos-summary-table">
+                <thead>
+                    <tr>
+                        <th>Resultados</th>
+                        <th>Aciertos</th>
+                        <th>Apuestas</th>
+                        <th>%</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        const totalApuestas = peñaBets.length;
         const sortedAciertosKeys = Object.keys(aciertosDistribution).map(Number).sort((a, b) => b - a); // Ordenar de más a menos aciertos
         
-        if (userPicksMadeCount > 0) {
-            sortedAciertosKeys.forEach(numAciertos => {
-                const count = aciertosDistribution[numAciertos];
-                aciertosHtml += `<p>${numAciertos}/${userPicksMadeCount} ${count} de ${peñaBets.length} apuestas</p>`;
-            });
-        } else {
-             aciertosHtml += `<p>0 / ${peñaBets.length} apuestas</p>`;
-        }
-        totalCorrectMatchesElem.innerHTML = aciertosHtml;
+        sortedAciertosKeys.forEach(numAciertos => {
+            const count = aciertosDistribution[numAciertos];
+            const percentage = ((count / totalApuestas) * 100).toFixed(2); // Formatear a 2 decimales
+            aciertosTableHtml += `
+                <tr>
+                    <td>${userPicksMadeCount}</td>
+                    <td>${numAciertos}</td>
+                    <td>${count}</td>
+                    <td>${percentage}%</td>
+                </tr>
+            `;
+        });
+        aciertosTableHtml += `
+                </tbody>
+            </table>
+        `;
+        totalCorrectMatchesElem.innerHTML = aciertosTableHtml;
 
 
         // --- Actualizar Pleno al 15 ---

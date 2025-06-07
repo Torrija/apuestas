@@ -1,5 +1,54 @@
 /* Estilos específicos para la página de seguimiento de la Quiniela */
 
+/* Ajuste general para los títulos H3 dentro de las tarjetas de resumen */
+.summary-cards .card h3 {
+    font-size: 1.2em; /* Mantener el tamaño de título */
+    margin-bottom: 15px; /* Espacio para el contenido */
+    color: #0056b3;
+}
+
+/* Estilos para la nueva tabla dentro de la tarjeta Aciertos (1-14) */
+.aciertos-summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 0.9em; /* Tamaño de fuente para la tabla */
+    text-align: center;
+}
+
+.aciertos-summary-table th,
+.aciertos-summary-table td {
+    border: 1px solid #ddd;
+    padding: 8px 5px; /* Padding ajustado para celdas */
+}
+
+.aciertos-summary-table thead th {
+    background-color: #f0f8ff; /* Fondo ligeramente diferente para los encabezados */
+    color: #004D99;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Ajuste para el párrafo inicial si no hay selecciones aún */
+.summary-cards .card p {
+    font-size: 1em; /* Un tamaño más razonable para el texto general */
+    font-weight: normal; /* Normalizar el peso de la fuente si es necesario */
+    color: #333;
+}
+
+/* El ID totalCorrectMatchesElem ahora contendrá la tabla, pero si el inicio es un párrafo (0/0) */
+#totalCorrectMatches {
+    /* Si es un p, asegurar que el tamaño sea adecuado */
+    font-size: 1em; /* Asegurar que no sea grande como el 0.00 EUR */
+    font-weight: normal;
+    color: #333;
+}
+
+
+/* ... (mantener el resto de tu CSS existente sin cambios) ... */
+
+/* Ej. Aquí va el resto de tu CSS, como: */
+
 .quiniela-jornada-details,
 .user-prediction-summary,
 .peña-bets-results {
@@ -228,6 +277,25 @@
 }
 
 
+/* Nuevos estilos para el resaltado de apuestas de la peña */
+
+.peña-bet-card .bet-result-incorrect {
+    color: #dc3545; /* Rojo para aciertos incorrectos */
+}
+
+.peña-bet-card .bet-result-unselected {
+    background-color: #e0f2f7; /* Azul claro para partidos no seleccionados por el usuario */
+    padding: 2px 0;
+    border-radius: 3px;
+    font-weight: bold;
+    color: #004D99; /* Texto azul oscuro */
+}
+
+.peña-bet-card .pleno15-scores-display {
+    display: inline-block; /* Para aplicar el padding y background */
+    margin-left: 5px; /* Espacio entre los 14 partidos y el pleno al 15 */
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .quiniela-jornada-details,
@@ -252,6 +320,15 @@
         padding: 6px 10px;
         font-size: 0.8em;
     }
+
+    /* Ajuste para el encabezado de las tarjetas en responsive */
+    .summary-cards .card h3 {
+        font-size: 1.1em;
+    }
+    /* Ajuste para el tamaño de fuente de la tabla de aciertos en responsive */
+    .aciertos-summary-table {
+        font-size: 0.8em;
+    }
 }
 
 @media (max-width: 480px) {
@@ -272,5 +349,10 @@
     }
     .peña-bet-card .bet-combination {
         font-size: 1em;
+    }
+
+    /* Ajuste de tamaño de fuente para la tabla de aciertos en pantallas muy pequeñas */
+    .aciertos-summary-table {
+        font-size: 0.75em;
     }
 }
