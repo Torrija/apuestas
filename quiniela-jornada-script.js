@@ -9,8 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const peñaBetsList = document.getElementById('peñaBetsList');
 
     let jornadaData = null; // Datos de los partidos de la jornada
-    let peñaBets = [];    // Apuestas de la peña
-    let userSelections = Array(16).fill(null); // Array para almacenar la selección del usuario (14 partidos + 2 para Pleno al 15)
+    let peñaBets = [];    // Apuestas de la peña (array de arrays de 16 elementos)
+    // userSelections: array de 16 elementos [14 partidos, Pleno15Local, Pleno15Visitante]
+    let userSelections = Array(16).fill(null);
 
     // --- Funciones de Utilidad ---
 
@@ -22,34 +23,51 @@ document.addEventListener('DOMContentLoaded', () => {
     // Función para actualizar el resumen del pronóstico del usuario
     function updateUserPredictionDisplay() {
         const mainPicks = userSelections.slice(0, 14).map(s => s === null ? '-' : s).join('');
-        const pleno15Picks = userSelections[14] !== null && userSelections[15] !== null ?
+        const pleno15Picks = (userSelections[14] !== null && userSelections[15] !== null) ?
                               `<span class="pleno15-user-scores">(${userSelections[14]}-${userSelections[15]})</span>` : '';
         userPredictionElem.innerHTML = mainPicks + pleno15Picks;
     }
 
-    // Compara la selección del usuario con una apuesta de la peña
-    function compareBets(userBet, peñaBet) {
+    /**
+     * Compara la selección del usuario con una apuesta de la peña.
+     * Calcula aciertos solo para los partidos donde el usuario ha hecho una selección.
+     */
+    function compareBets(userPicks, peñaBet) {
         let correctMatches = 0;
         let pleno15Correct = false;
-        let matchesDetail = []; // Para resaltar aciertos
+        let userPicksMadeCount = 0; // Cuántos picks ha hecho el usuario en 1-14
+
+        let matchesDetail = []; // Para resaltar aciertos y no seleccionados
 
         for (let i = 0; i < 14; i++) { // Partidos del 1 al 14
-            if (userBet[i] !== null && userBet[i] === peñaBet[i]) {
-                correctMatches++;
-                matchesDetail.push({ pick: peñaBet[i], correct: true });
+            if (userPicks[i] !== null) {
+                userPicksMadeCount++;
+                if (userPicks[i] === peñaBet[i]) {
+                    correctMatches++;
+                    matchesDetail.push({ pick: peñaBet[i], status: 'correct' });
+                } else {
+                    matchesDetail.push({ pick: peñaBet[i], status: 'incorrect' });
+                }
             } else {
-                matchesDetail.push({ pick: peñaBet[i], correct: false });
+                matchesDetail.push({ pick: peñaBet[i], status: 'unselected' }); // Marcar como no seleccionado por el usuario
             }
         }
 
         // Pleno al 15 (Partido 15: local y visitante)
-        if (userBet[14] !== null && userBet[15] !== null &&
-            userBet[14] === peñaBet[14] && userBet[15] === peñaBet[15]) {
+        // Solo se considera acertado si AMBAS partes han sido seleccionadas por el usuario y coinciden
+        if (userPicks[14] !== null && userPicks[15] !== null &&
+            userPicks[14] === peñaBet[14] && userPicks[15] === peñaBet[15]) {
             pleno15Correct = true;
         }
 
-        return { correctMatches, pleno15Correct, matchesDetail };
+        // Para el Pleno al 15 en matchesDetail
+        matchesDetail.push({ pick: peñaBet[14], status: (userPicks[14] !== null && userPicks[14] === peñaBet[14]) ? 'correct' : ((userPicks[14] === null) ? 'unselected' : 'incorrect') });
+        matchesDetail.push({ pick: peñaBet[15], status: (userPicks[15] !== null && userPicks[15] === peñaBet[15]) ? 'correct' : ((userPicks[15] === null) ? 'unselected' : 'incorrect') });
+
+
+        return { correctMatches, pleno15Correct, userPicksMadeCount, matchesDetail };
     }
+
 
     // --- Funciones de Renderizado ---
 
@@ -146,38 +164,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Calcula y muestra los resultados de las apuestas de la peña
     function calculateAndDisplayPeñaResults() {
-        if (!jornadaData || !peñaBets || userSelections.slice(0,14).some(s => s === null)) {
-            // No calcular si no hay datos cargados o si faltan pronósticos para los 14 partidos
+        const userPicksMadeCount = userSelections.slice(0, 14).filter(s => s !== null).length;
+
+        if (userPicksMadeCount === 0) {
+            totalCorrectMatchesElem.innerHTML = `0 / 14`;
             pleno15CorrectElem.textContent = '--';
-            totalCorrectMatchesElem.textContent = `0 / 14`;
-            peñaBetsList.innerHTML = '<p class="loading-message">Selecciona los resultados de los 14 partidos para ver las coincidencias.</p>';
-            coincidenceSummaryElem.textContent = '';
+            peñaBetsList.innerHTML = '<p class="loading-message">Selecciona los resultados de los partidos para ver las coincidencias.</p>';
+            coincidenceSummaryElem.textContent = 'Apuestas de la Peña:';
             return;
         }
 
-        if (userSelections[14] === null || userSelections[15] === null) {
-            pleno15CorrectElem.textContent = '--';
-        }
-
         let betsWithResults = [];
-        let totalHits = 0;
-        let hitsCount = {}; // Para el resumen (ej. {10: 5, 11: 2})
+        let aciertosDistribution = {}; // Almacenará { 'numAciertos': count }
 
         peñaBets.forEach((peñaBet, index) => {
             const { correctMatches, pleno15Correct, matchesDetail } = compareBets(userSelections, peñaBet);
+            
             betsWithResults.push({
                 originalBet: peñaBet,
-                correctMatches,
+                correctMatches, // Aciertos sobre userPicksMadeCount
                 pleno15Correct,
                 matchesDetail,
                 id: `bet_${index}` // ID para identificar la apuesta
             });
-            totalHits += correctMatches;
 
-            // Contar aciertos para el resumen
-            hitsCount[correctMatches] = (hitsCount[correctMatches] || 0) + 1;
+            // Sumar al contador de distribución
+            aciertosDistribution[correctMatches] = (aciertosDistribution[correctMatches] || 0) + 1;
         });
 
+        // --- Actualizar el resumen del pronóstico del usuario (Aciertos (1-14) card) ---
+        let aciertosHtml = '<h3>Aciertos (1-14)</h3>';
+        const sortedAciertosKeys = Object.keys(aciertosDistribution).map(Number).sort((a, b) => b - a); // Ordenar de más a menos aciertos
+        
+        if (userPicksMadeCount > 0) {
+            sortedAciertosKeys.forEach(numAciertos => {
+                const count = aciertosDistribution[numAciertos];
+                aciertosHtml += `<p>${numAciertos}/${userPicksMadeCount} ${count} de ${peñaBets.length} apuestas</p>`;
+            });
+        } else {
+             aciertosHtml += `<p>0 / ${peñaBets.length} apuestas</p>`;
+        }
+        totalCorrectMatchesElem.innerHTML = aciertosHtml;
+
+
+        // --- Actualizar Pleno al 15 ---
+        const userPleno15Completed = userSelections[14] !== null && userSelections[15] !== null;
+        let pleno15BetsCount = 0;
+        if (userPleno15Completed) {
+            pleno15BetsCount = betsWithResults.filter(b => b.pleno15Correct).length;
+            pleno15CorrectElem.textContent = `${pleno15BetsCount} de ${peñaBets.length} (Pleno al 15)`;
+        } else {
+            pleno15CorrectElem.textContent = '--';
+        }
+        
+        // --- Actualizar la sección de Apuestas de la Peña ---
         // Ordenar por aciertos (descendente) y luego por Pleno al 15 (los que aciertan primero)
         betsWithResults.sort((a, b) => {
             if (a.pleno15Correct && !b.pleno15Correct) return -1;
@@ -185,30 +225,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return b.correctMatches - a.correctMatches;
         });
 
-        // Mostrar aciertos del usuario
-        totalCorrectMatchesElem.textContent = `${betsWithResults[0].correctMatches} / 14`;
-        pleno15CorrectElem.textContent = betsWithResults[0].pleno15Correct ? '¡Acertado!' : 'No';
-
-        // Renderizar las apuestas de la peña
         peñaBetsList.innerHTML = '';
-        coincidenceSummaryElem.innerHTML = '<strong>Resumen de Aciertos de la Peña:</strong>';
-        const sortedHits = Object.keys(hitsCount).map(Number).sort((a, b) => b - a); // Ordenar de más a menos aciertos
-        sortedHits.forEach(hits => {
-            coincidenceSummaryElem.innerHTML += `<br>${hitsCount[hits]} ${hitsCount[hits] === 1 ? 'apuesta' : 'apuestas'} con <strong>${hits} aciertos</strong>.`;
-        });
-        if (userSelections[14] !== null && userSelections[15] !== null) { // Si el pleno al 15 está completo
-             const pleno15Bets = betsWithResults.filter(b => b.pleno15Correct);
-             if (pleno15Bets.length > 0) {
-                 coincidenceSummaryElem.innerHTML += `<br>¡<strong>${pleno15Bets.length}</strong> ${pleno15Bets.length === 1 ? 'apuesta' : 'apuestas'} han acertado el Pleno al 15!`;
-             }
-         }
-
+        coincidenceSummaryElem.innerHTML = '<strong>Apuestas de la Peña con más aciertos:</strong>';
 
         // Mostrar solo las primeras 10 (o todas si son menos) que tienen algún acierto significativo
-        const betsToRender = betsWithResults.filter(b => b.correctMatches > 0 || b.pleno15Correct).slice(0, 10);
+        const betsToRender = betsWithResults.slice(0, 10); // Mostrar las 10 mejores siempre
 
         if (betsToRender.length === 0) {
-             peñaBetsList.innerHTML = '<p class="loading-message">Ninguna apuesta de la peña coincide significativamente con tu pronóstico.</p>';
+             peñaBetsList.innerHTML = '<p class="loading-message">Selecciona resultados para ver las apuestas de la peña.</p>';
         } else {
             betsToRender.forEach(betResult => {
                 const card = document.createElement('div');
@@ -219,13 +243,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 let combinedPredictionHtml = '';
                 betResult.matchesDetail.forEach((detail, idx) => {
+                    let className = '';
+                    if (detail.status === 'correct') {
+                        className = 'bet-result-highlight';
+                    } else if (detail.status === 'unselected') {
+                        className = 'bet-result-unselected'; // Nueva clase para azul
+                    } else {
+                        className = 'bet-result-incorrect'; // Para picks incorrectos
+                    }
+
                     if (idx < 14) { // Partidos 1-14
-                        combinedPredictionHtml += `<span class="${detail.correct ? 'bet-result-highlight' : ''}">${detail.pick}</span>`;
+                        combinedPredictionHtml += `<span class="${className}">${detail.pick}</span>`;
                     }
                 });
 
-                // Añadir Pleno al 15
-                combinedPredictionHtml += `<span class="${betResult.pleno15Correct ? 'bet-pleno15-highlight' : ''}">(${betResult.originalBet[14]}-${betResult.originalBet[15]})</span>`;
+                // Añadir Pleno al 15 (usando los últimos dos elementos de matchesDetail)
+                const pleno15LocalStatus = betResult.matchesDetail[14].status;
+                const pleno15VisitantStatus = betResult.matchesDetail[15].status;
+                const pleno15LocalPick = betResult.matchesDetail[14].pick;
+                const pleno15VisitantPick = betResult.matchesDetail[15].pick;
+
+                combinedPredictionHtml += `<span class="pleno15-scores-display">`;
+                combinedPredictionHtml += `<span class="${pleno15LocalStatus === 'correct' ? 'bet-pleno15-highlight' : (pleno15LocalStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${pleno15LocalPick}</span>`;
+                combinedPredictionHtml += `-`;
+                combinedPredictionHtml += `<span class="${pleno15VisitantStatus === 'correct' ? 'bet-pleno15-highlight' : (pleno15VisitantStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${pleno15VisitantPick}</span>`;
+                combinedPredictionHtml += `</span>`;
 
 
                 card.innerHTML = `

@@ -401,3 +401,32 @@ body {
         width: 100%; /* Ocupa todo el ancho en móviles */
     }
 }
+
+/* --- Navigation Buttons (Common styles for index.html and quiniela-jornada.html) --- */
+.main-nav {
+    margin-top: 15px; /* Espacio desde el título principal */
+}
+
+.main-nav .nav-button {
+    background-color: #f7921a; /* Naranja/amarillo, distintivo para Quiniela */
+    color: white; /* ¡Texto blanco para mejor contraste en ambos backgrounds! */
+    padding: 12px 25px; /* Padding ligeramente más grande para mejor área de clic y visibilidad */
+    border-radius: 8px; /* Ligeramente más redondeado */
+    text-decoration: none; /* Quita el subrayado del enlace */
+    font-weight: bold;
+    font-size: 1.1em; /* Fuente ligeramente más grande */
+    display: inline-flex; /* Para que el icono y el texto estén en línea y centrados */
+    align-items: center;
+    gap: 10px; /* Más espacio entre el icono y el texto */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves para hover */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Sutil sombra para dar profundidad */
+}
+
+.main-nav .nav-button:hover {
+    background-color: #d67a0e; /* Naranja más oscuro al pasar el ratón */
+    transform: translateY(-2px); /* Ligero efecto de elevación al pasar el ratón */
+}
+
+.main-nav .nav-button:visited { /* Asegura que los enlaces visitados también se vean blancos */
+    color: white;
+}
