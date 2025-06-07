@@ -1,0 +1,191 @@
+/* Estilos específicos para la página de administración */
+
+.admin-section {
+    background-color: #fff;
+    padding: 30px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.admin-section h2, .admin-section h3 {
+    color: #004D99;
+    margin-bottom: 20px;
+}
+
+.admin-form {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+.form-group input[type="password"],
+.form-group input[type="text"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box; /* Incluir padding en el ancho */
+}
+
+.form-group textarea {
+    resize: vertical; /* Permitir redimensionar verticalmente */
+}
+
+.button-primary, .button-secondary, .button-action {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none; /* Para enlaces con estilo de botón */
+}
+
+.button-primary:hover {
+    background-color: #0056b3;
+}
+
+.button-secondary {
+    background-color: #6c757d;
+    margin-top: 10px;
+}
+
+.button-secondary:hover {
+    background-color: #5a6268;
+}
+
+.button-danger {
+    background-color: #dc3545;
+}
+
+.button-danger:hover {
+    background-color: #c82333;
+}
+
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.success-message {
+    color: green;
+    font-size: 0.9em;
+    margin-top: 10px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 40px 0;
+}
+
+/* Estilos para la lista de comentarios existentes en admin */
+.existing-comments-list-container {
+    text-align: left; /* Alinear el texto a la izquierda dentro del contenedor */
+}
+
+.admin-comment-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.admin-comment-card h4 {
+    color: #004D99;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between; /* Espacio entre título y acciones */
+    align-items: center;
+}
+
+.admin-comment-card .comment-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.admin-comment-card .comment-actions .button-action {
+    padding: 6px 10px;
+    font-size: 0.8em;
+}
+
+.comment-content-preview {
+    font-size: 0.95em;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    border: 1px dashed #eee;
+    padding: 10px;
+    background-color: #fff;
+    max-height: 150px; /* Limitar altura para previsualización */
+    overflow-y: auto; /* Scroll si el contenido es largo */
+}
+
+.admin-comment-card .comment-date {
+    font-size: 0.8em;
+    color: #777;
+    text-align: left;
+    border-top: none; /* Eliminar borde superior si ya hay uno en el card principal */
+    padding-top: 0;
+    margin-top: 0;
+}
+
+/* Captcha group */
+.captcha-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.captcha-group label {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+.captcha-group input {
+    max-width: 200px; /* Campo de input más pequeño */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .admin-form {
+        padding: 0 15px;
+    }
+    .admin-comment-card .comment-actions {
+        flex-direction: column;
+        gap: 5px;
+        align-items: flex-end;
+    }
+    .admin-comment-card h4 {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
