@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', () => {
         peñaBetsList.innerHTML = '';
         coincidenceSummaryElem.textContent = 'Apuestas de la Peña agrupadas por aciertos:';
 
-        if (userPicksMadeCount === 0) {
+        if (userPicksMadeCount === 0 && (!userPleno15Completed || pleno15BetsCount === 0)) { // Si no hay picks o no hay pleno completado
             peñaBetsList.innerHTML = '<p class="loading-message">Selecciona resultados para ver las apuestas de la peña.</p>';
         } else {
             // Mostrar los grupos de aciertos
@@ -302,9 +302,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     const pleno15VisitantPick = betResult.matchesDetail[15].pick;
 
                     combinedPredictionHtml += `<span class="pleno15-scores-display">`;
-                    combinedPredictionHtml += `<span class="${pleno15LocalStatus === 'correct' ? 'bet-pleno15-highlight' : (pleno15LocalStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${pleno15LocalPick}</span>`;
+                    combinedPredictionHtml += `<span class="${pleno15LocalStatus === 'correct' ? 'bet-pleno15-highlight' : (pleno15LocalStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${plano15LocalPick}</span>`;
                     combinedPredictionHtml += `-`;
-                    combinedPredictionHtml += `<span class="${pleno15VisitantStatus === 'correct' ? 'bet-pleno15-highlight' : (plelo15VisitantStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${pleno15VisitantPick}</span>`;
+                    combinedPredictionHtml += `<span class="${pleno15VisitantStatus === 'correct' ? 'bet-pleno15-highlight' : (pleno15VisitantStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${pleno15VisitantPick}</span>`; 
                     combinedPredictionHtml += `</span>`;
 
                     // Iconos de Pleno al 15 al final de cada combinación
