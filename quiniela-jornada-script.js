@@ -8,10 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const coincidenceSummaryElem = document.getElementById('coincidenceSummary'); // Este ahora solo tiene un texto introductorio
     const peñaBetsList = document.getElementById('peñaBetsList');
 
+    // Elementos del gráfico de probabilidades
+    const probabilityTypeSelect = document.getElementById('probabilityType');
+    const probabilityChartCanvas = document.getElementById('probabilityChart');
+    const probabilityChartMessage = document.getElementById('probabilityChartMessage');
+
     let jornadaData = null; // Datos de los partidos de la jornada
     let peñaBets = [];    // Apuestas de la peña (array de arrays de 16 elementos)
     // userSelections: array de 16 elementos [14 partidos, Pleno15Local, Pleno15Visitante]
     let userSelections = Array(16).fill(null);
+    let myProbabilityChart; // Instancia del gráfico de probabilidades
 
     // --- Funciones de Utilidad ---
 
@@ -159,6 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateUserPredictionDisplay();
         calculateAndDisplayPeñaResults();
+        calculateAndRenderProbabilityChart(); // Llamar a la función del gráfico
     }
 
 
@@ -302,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const pleno15VisitantPick = betResult.matchesDetail[15].pick;
 
                     combinedPredictionHtml += `<span class="pleno15-scores-display">`;
-                    combinedPredictionHtml += `<span class="${pleno15LocalStatus === 'correct' ? 'bet-pleno15-highlight' : (pleno15LocalStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${pleno15LocalPick}</span>`; // CORRECCIÓN APLICADA AQUÍ
+                    combinedPredictionHtml += `<span class="${pleno15LocalStatus === 'correct' ? 'bet-pleno15-highlight' : (pleno15LocalStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${pleno15LocalPick}</span>`;
                     combinedPredictionHtml += `-`;
                     combinedPredictionHtml += `<span class="${pleno15VisitantStatus === 'correct' ? 'bet-pleno15-highlight' : (pleno15VisitantStatus === 'unselected' ? 'bet-result-unselected' : 'bet-result-incorrect')}">${pleno15VisitantPick}</span>`; 
                     combinedPredictionHtml += `</span>`;
@@ -318,6 +325,167 @@ document.addEventListener('DOMContentLoaded', () => {
                 peñaBetsList.appendChild(groupContainer);
             });
         }
+    }
+
+    // --- Lógica del Gráfico de Probabilidades ---
+    function calculateAndRenderProbabilityChart() {
+        const userPicksMadeCount = userSelections.slice(0, 14).filter(s => s !== null).length;
+        const probabilityType = probabilityTypeSelect.value;
+
+        if (userPicksMadeCount === 0) {
+            probabilityChartMessage.style.display = 'block'; // Mostrar mensaje
+            if (myProbabilityChart) {
+                myProbabilityChart.destroy(); // Destruir gráfico si no hay selecciones
+                myProbabilityChart = null;
+            }
+            return;
+        } else {
+            probabilityChartMessage.style.display = 'none'; // Ocultar mensaje
+        }
+
+        const labels = ['Jugados', 'LAE', 'Probables'];
+        const datasets = [];
+
+        // Datos para las barras apiladas (Min vs Max)
+        const minProbabilities = {}; // Producto de las probabilidades mínimas de cada partido marcado
+        const maxProbabilities = {}; // Producto de las probabilidades máximas de cada partido marcado
+        const userProbabilities = {}; // Producto de las probabilidades de los picks del usuario
+
+        labels.forEach(type => {
+            minProbabilities[type] = 1;
+            maxProbabilities[type] = 1;
+            userProbabilities[type] = 1;
+
+            jornadaData.matches.slice(0, 14).forEach((match, index) => {
+                const userPick = userSelections[index];
+                if (userPick !== null) {
+                    // Probabilidad del pick del usuario
+                    const userPickProb = (match[type][userPick] || 0) / 100;
+                    userProbabilities[type] *= userPickProb;
+
+                    // Probabilidad mínima y máxima para este partido
+                    const probs = [match[type]['1'] / 100 || 0, match[type]['X'] / 100 || 0, match[type]['2'] / 100 || 0];
+                    const minProb = Math.min(...probs);
+                    const maxProb = Math.max(...probs);
+
+                    minProbabilities[type] *= minProb;
+                    maxProbabilities[type] *= maxProb;
+                }
+            });
+        });
+
+        // Dataset para las barras de probabilidades mínimas
+        datasets.push({
+            label: 'Probabilidad Mínima',
+            data: labels.map(type => (minProbabilities[type] * 100).toFixed(4)), // Convertir a porcentaje y redondear
+            backgroundColor: '#004D99', // Azul oscuro
+            borderColor: '#004D99',
+            borderWidth: 1,
+            stack: 'combinedBars' // Apilar en el mismo grupo
+        });
+
+        // Dataset para la diferencia (Máxima - Mínima)
+        datasets.push({
+            label: 'Rango Restante',
+            data: labels.map(type => ((maxProbabilities[type] - minProbabilities[type]) * 100).toFixed(4)), // Diferencia
+            backgroundColor: '#3498db', // Azul más claro
+            borderColor: '#3498db',
+            borderWidth: 1,
+            stack: 'combinedBars' // Apilar en el mismo grupo
+        });
+
+        // Dataset para la línea (Producto de tu Pronóstico)
+        datasets.push({
+            type: 'line',
+            label: 'Tu Pronóstico (Línea)',
+            data: labels.map(type => {
+                // Solo mostrar la línea para el tipo seleccionado en el dropdown
+                return type === probabilityType ? (userProbabilities[type] * 100).toFixed(4) : NaN;
+            }),
+            borderColor: '#f7921a', // Naranja/Amarillo
+            borderWidth: 3,
+            fill: false,
+            tension: 0, // Línea recta
+            pointRadius: 5,
+            pointBackgroundColor: '#f7921a',
+            yAxisID: 'y' // Usar el mismo eje Y
+        });
+
+
+        if (myProbabilityChart) {
+            myProbabilityChart.destroy();
+        }
+
+        myProbabilityChart = new Chart(probabilityChartCanvas, {
+            type: 'bar', // Tipo base es barra
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Probabilidad Combinada de Signos Seleccionados (Jornada 1-14)',
+                        font: { size: 16 }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += context.parsed.y + '%';
+                                }
+                                return label;
+                            }
+                        }
+                    },
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            filter: function(item, chart) {
+                                // Ocultar el label de la línea si no está seleccionada
+                                if (item.datasetIndex === 2) { // Índice del dataset de la línea
+                                    const selectedTypeIndex = labels.indexOf(probabilityType);
+                                    return item.index === selectedTypeIndex; // Mostrar solo el label de la línea si es el tipo seleccionado
+                                }
+                                return true;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true, // Apilar barras en el eje X
+                        title: {
+                            display: true,
+                            text: 'Tipo de Análisis'
+                        }
+                    },
+                    y: {
+                        stacked: true, // Apilar en el eje Y también para que las barras se apilen
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Probabilidad (%)'
+                        },
+                        max: 100, // Escala de 0 a 100 para porcentaje
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 
 
@@ -339,12 +507,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
             renderMatchesTable(jornadaData);
             updateUserPredictionDisplay(); // Inicializar con pronóstico vacío
+            
+            // Añadir listener al selector de tipo de probabilidad
+            probabilityTypeSelect.addEventListener('change', calculateAndRenderProbabilityChart);
+
             calculateAndDisplayPeñaResults(); // Inicializar con resultados de la peña (sin aciertos al principio)
+            calculateAndRenderProbabilityChart(); // Inicializar el gráfico
 
         } catch (error) {
             console.error("Error al cargar los datos de la Quiniela:", error);
             matchesTableBody.innerHTML = '<tr><td colspan="4" class="loading-message error-message">Error al cargar los datos de la Quiniela.</td></tr>';
             peñaBetsList.innerHTML = '<p class="loading-message error-message">Error al cargar las apuestas de la peña.</p>';
+            probabilityChartMessage.textContent = 'Error al cargar los datos de la jornada para el gráfico.';
+            probabilityChartMessage.style.display = 'block';
         }
     }
 
