@@ -49,7 +49,6 @@
             <h2>Tu Pronóstico y Aciertos</h2>
             <div class="summary-cards">
                 <div class="card">
-                    <!-- Eliminado el h3 original, ahora el script lo generará -->
                     <div id="totalCorrectMatches">
                         <!-- Contenido generado por JS -->
                     </div>
@@ -65,10 +64,27 @@
             </div>
         </section>
 
+        <!-- NUEVA SECCIÓN PARA EL GRÁFICO DE PROBABILIDADES -->
+        <section class="probability-chart-section">
+            <h2>Análisis de Probabilidades</h2>
+            <div class="chart-controls">
+                <label for="probabilityType">Tipo de Análisis:</label>
+                <select id="probabilityType">
+                    <option value="probables">Probables</option>
+                    <option value="jugados">Jugados</option>
+                    <option value="lae">LAE</option>
+                </select>
+            </div>
+            <div class="chart-container-quiniela">
+                <canvas id="probabilityChart"></canvas>
+                <p id="probabilityChartMessage" class="loading-message">Selecciona al menos un partido para ver el gráfico de probabilidades.</p>
+            </div>
+        </section>
+
         <section class="peña-bets-results">
             <h2>Apuestas de la Peña (Jornada <span id="jornadaNumberBets">--</span>)</h2>
             <p id="coincidenceSummary">Apuestas de la Peña agrupadas por aciertos:</p>
-            <div class="peña-bets-list-container"> <!-- NUEVO CONTENEDOR PARA CENTRAR -->
+            <div class="peña-bets-list-container">
                 <div class="peña-bets-list" id="peñaBetsList">
                     <!-- Las apuestas coincidentes de la peña se cargarán aquí dinámicamente -->
                     <p class="loading-message">Selecciona los resultados de los partidos para ver las coincidencias.</p>
