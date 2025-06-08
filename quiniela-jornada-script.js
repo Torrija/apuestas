@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Lógica del Gráfico de Probabilidades ---
     function calculateAndRenderProbabilityChart() {
         const userPicksMadeCount = userSelections.slice(0, 14).filter(s => s !== null).length;
-        const probabilityType = probabilityTypeSelect.value;
+        const probabilityType = probabilityTypeSelect.value; // 'probables', 'jugados', 'lae'
 
         if (userPicksMadeCount === 0) {
             probabilityChartMessage.style.display = 'block'; // Mostrar mensaje
@@ -343,33 +343,40 @@ document.addEventListener('DOMContentLoaded', () => {
             probabilityChartMessage.style.display = 'none'; // Ocultar mensaje
         }
 
-        const labels = ['Jugados', 'LAE', 'Probables'];
+        // Los labels de los datasets deben coincidir con las propiedades en jornadaData.matches
+        const labels = ['jugados', 'lae', 'probables']; // Nombres de las propiedades en el JSON
+        const labelsDisplay = ['Jugados', 'LAE', 'Probables']; // Nombres para mostrar en el gráfico
         const datasets = [];
 
         // Datos para las barras apiladas (Min vs Max)
-        const minProbabilities = {}; // Producto de las probabilidades mínimas de cada partido marcado
-        const maxProbabilities = {}; // Producto de las probabilidades máximas de cada partido marcado
-        const userProbabilities = {}; // Producto de las probabilidades de los picks del usuario
+        const minProbsForType = {}; // Producto de las probabilidades mínimas
+        const maxProbsForType = {}; // Producto de las probabilidades máximas
+        const userProbsForType = {}; // Producto de las probabilidades de los picks del usuario
 
-        labels.forEach(type => {
-            minProbabilities[type] = 1;
-            maxProbabilities[type] = 1;
-            userProbabilities[type] = 1;
+        labels.forEach(type => { // type será 'jugados', 'lae', 'probables'
+            minProbsForType[type] = 1;
+            maxProbsForType[type] = 1;
+            userProbsForType[type] = 1;
 
-            jornadaData.matches.slice(0, 14).forEach((match, index) => {
+            jornadaData.matches.slice(0, 14).forEach((match, index) => { // Solo partidos 1-14
                 const userPick = userSelections[index];
                 if (userPick !== null) {
-                    // Probabilidad del pick del usuario
-                    const userPickProb = (match[type][userPick] || 0) / 100;
-                    userProbabilities[type] *= userPickProb;
+                    // Acceder a las probabilidades usando match[type][userPick]
+                    // Las propiedades en el JSON son '1', 'X', '2'
+                    const userPickProb = (match[type][userPick] || 0) / 100; // CORRECCIÓN AQUÍ: match[type] directamente
+                    userProbsForType[type] *= userPickProb;
 
                     // Probabilidad mínima y máxima para este partido
-                    const probs = [match[type]['1'] / 100 || 0, match[type]['X'] / 100 || 0, match[type]['2'] / 100 || 0];
-                    const minProb = Math.min(...probs);
-                    const maxProb = Math.max(...probs);
+                    const probs = [
+                        (match[type]['1'] || 0) / 100,
+                        (match[type]['X'] || 0) / 100,
+                        (match[type]['2'] || 0) / 100
+                    ];
+                    const minProb = Math.min(...probs.filter(p => p > 0)); // Filtrar 0s para evitar Math.min de []
+                    const maxProb = Math.max(...probs.filter(p => p > 0));
 
-                    minProbabilities[type] *= minProb;
-                    maxProbabilities[type] *= maxProb;
+                    minProbsForType[type] *= minProb;
+                    maxProbsForType[type] *= maxProb;
                 }
             });
         });
@@ -377,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dataset para las barras de probabilidades mínimas
         datasets.push({
             label: 'Probabilidad Mínima',
-            data: labels.map(type => (minProbabilities[type] * 100).toFixed(4)), // Convertir a porcentaje y redondear
+            data: labels.map(type => (minProbsForType[type] * 100).toFixed(6)), // Convertir a porcentaje y redondear
             backgroundColor: '#004D99', // Azul oscuro
             borderColor: '#004D99',
             borderWidth: 1,
@@ -387,7 +394,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dataset para la diferencia (Máxima - Mínima)
         datasets.push({
             label: 'Rango Restante',
-            data: labels.map(type => ((maxProbabilities[type] - minProbabilities[type]) * 100).toFixed(4)), // Diferencia
+            data: labels.map(type => {
+                const diff = (maxProbsForType[type] - minProbsForType[type]) * 100;
+                return diff > 0 ? diff.toFixed(6) : 0; // Asegurar que no sea negativo y redondear
+            }),
             backgroundColor: '#3498db', // Azul más claro
             borderColor: '#3498db',
             borderWidth: 1,
@@ -397,10 +407,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Dataset para la línea (Producto de tu Pronóstico)
         datasets.push({
             type: 'line',
-            label: 'Tu Pronóstico (Línea)',
+            label: 'Tu Pronóstico', // Etiqueta genérica, el callback del tooltip lo hace específico
             data: labels.map(type => {
-                // Solo mostrar la línea para el tipo seleccionado en el dropdown
-                return type === probabilityType ? (userProbabilities[type] * 100).toFixed(4) : NaN;
+                // Si este es el tipo seleccionado en el dropdown, usa el valor, si no, usa NaN
+                return type === probabilityType ? (userProbsForType[type] * 100).toFixed(6) : NaN;
             }),
             borderColor: '#f7921a', // Naranja/Amarillo
             borderWidth: 3,
@@ -419,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
         myProbabilityChart = new Chart(probabilityChartCanvas, {
             type: 'bar', // Tipo base es barra
             data: {
-                labels: labels,
+                labels: labelsDisplay, // Usar los labels para mostrar
                 datasets: datasets
             },
             options: {
@@ -441,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     label += ': ';
                                 }
                                 if (context.parsed.y !== null) {
-                                    label += context.parsed.y + '%';
+                                    label += parseFloat(context.parsed.y).toFixed(4) + '%'; // Asegurar formato de porcentaje
                                 }
                                 return label;
                             }
@@ -451,10 +461,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         position: 'top',
                         labels: {
                             filter: function(item, chart) {
-                                // Ocultar el label de la línea si no está seleccionada
-                                if (item.datasetIndex === 2) { // Índice del dataset de la línea
-                                    const selectedTypeIndex = labels.indexOf(probabilityType);
-                                    return item.index === selectedTypeIndex; // Mostrar solo el label de la línea si es el tipo seleccionado
+                                // Ocultar el label de la línea si no es el tipo seleccionado en el dropdown
+                                // El índice del dataset de la línea es 2
+                                if (item.datasetIndex === 2) { 
+                                    const datasetLabels = chart.data.labels;
+                                    const selectedTypeDisplayLabel = labelsDisplay[labels.indexOf(probabilityType)];
+                                    return item.text === 'Tu Pronóstico'; // Siempre mostrar "Tu Pronóstico"
                                 }
                                 return true;
                             }
@@ -486,6 +498,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         });
+        
+        // Ajustar el color de la leyenda de la línea para que coincida con el color de la línea
+        if (myProbabilityChart && myProbabilityChart.options.plugins.legend && myProbabilityChart.options.plugins.legend.labels) {
+            myProbabilityChart.options.plugins.legend.labels.generateLabels = function(chart) {
+                const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                // Encontrar el label del dataset de la línea (índice 2) y cambiar su color de punto
+                if (labels[2]) { // Asegurarse de que el label de la línea existe
+                    labels[2].fillStyle = '#f7921a'; // El color de tu línea
+                }
+                return labels;
+            };
+            myProbabilityChart.update(); // Actualizar el gráfico para que la leyenda se repinte
+        }
     }
 
 
