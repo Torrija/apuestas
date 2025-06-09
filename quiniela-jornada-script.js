@@ -338,197 +338,196 @@ document.addEventListener('DOMContentLoaded', () => {
         return 8; // Para valores muy pequeños
     }
 
-    function calculateAndRenderProbabilityChart() {
-        const userPicksMadeCount = userSelections.slice(0, 14).filter(s => s !== null).length;
-        const probabilityType = probabilityTypeSelect.value; // 'probables', 'jugados', 'lae'
+// Modificación en quiniela-jornada-script.js
 
-        if (userPicksMadeCount === 0) {
-            probabilityChartMessage.style.display = 'block'; // Mostrar mensaje
-            if (myProbabilityChart) {
-                myProbabilityChart.destroy(); // Destruir gráfico si no hay selecciones
-                myProbabilityChart = null;
-            }
-            return;
-        } else {
-            probabilityChartMessage.style.display = 'none'; // Ocultar mensaje
-        }
+// Ajuste en la función calculateAndRenderProbabilityChart
+function calculateAndRenderProbabilityChart() {
+    const userPicksMadeCount = userSelections.slice(0, 14).filter(s => s !== null).length;
+    const probabilityType = probabilityTypeSelect.value; // 'probables', 'jugados', 'lae'
 
-        const labels = ['jugados', 'lae', 'probables']; // Nombres de las propiedades en el JSON
-        const labelsDisplay = ['Jugados', 'LAE', 'Probables']; // Nombres para mostrar en el gráfico
-        const datasets = [];
-
-        let overallMaxProbCombined = 0; // Para el ajuste dinámico del eje Y
-
-        // Datos para las barras apiladas (Min vs Max)
-        const minProbsForType = {}; // Producto de las probabilidades mínimas
-        const maxProbsForType = {}; // Producto de las probabilidades máximas
-        const userProbsForType = {}; // Producto de las probabilidades de los picks del usuario
-
-        labels.forEach(type => { // type será 'jugados', 'lae', 'probables'
-            minProbsForType[type] = 1;
-            maxProbsForType[type] = 1;
-            userProbsForType[type] = 1;
-
-            jornadaData.matches.slice(0, 14).forEach((match, index) => { // Solo partidos 1-14
-                const userPick = userSelections[index];
-                if (userPick !== null) {
-                    // Probabilidad del pick del usuario
-                    const userPickProb = (match[type][userPick] || 0) / 100;
-                    userProbsForType[type] *= userPickProb;
-
-                    // Probabilidad mínima y máxima para este partido
-                    const probs = [
-                        (match[type]['1'] || 0) / 100,
-                        (match[type]['X'] || 0) / 100,
-                        (match[type]['2'] || 0) / 100
-                    ];
-                    // Filtrar 0s antes de min/max para evitar problemas si todas las probs son 0
-                    const validProbs = probs.filter(p => p > 0); 
-                    const minProb = validProbs.length > 0 ? Math.min(...validProbs) : 0;
-                    const maxProb = validProbs.length > 0 ? Math.max(...validProbs) : 0;
-
-                    minProbsForType[type] *= minProb;
-                    maxProbsForType[type] *= maxProb;
-                }
-            });
-
-            // Actualizar el máximo general de las probabilidades combinadas
-            overallMaxProbCombined = Math.max(overallMaxProbCombined, maxProbsForType[type], userProbsForType[type]);
-        });
-
-        // Ajustar el valor máximo del eje Y
-        let yAxisMax = 100; // Valor por defecto si todo es muy pequeño
-        if (overallMaxProbCombined > 0) {
-            yAxisMax = overallMaxProbCombined * 100 * 1.2; // 20% de padding
-            // Redondear al alza a una "cifra redonda" cercana
-            if (yAxisMax < 0.001) yAxisMax = 0.001;
-            else if (yAxisMax < 0.01) yAxisMax = Math.ceil(yAxisMax * 1000) / 1000; // Round to 0.001
-            else if (yAxisMax < 0.1) yAxisMax = Math.ceil(yAxisMax * 100) / 100;    // Round to 0.01
-            else if (yAxisMax < 1) yAxisMax = Math.ceil(yAxisMax * 10) / 10;      // Round to 0.1
-            else yAxisMax = Math.ceil(yAxisMax);                                  // Round to 1
-        }
-        yAxisMax = Math.min(yAxisMax, 100); // No exceder 100%
-
-        // Dataset para las barras de probabilidades mínimas
-        datasets.push({
-            label: 'Probabilidad Mínima',
-            data: labels.map(type => (minProbsForType[type] * 100)), // Ya en porcentaje
-            backgroundColor: '#004D99', // Azul oscuro
-            borderColor: '#004D99',
-            borderWidth: 1,
-            stack: 'combinedBars' // Apilar en el mismo grupo
-        });
-
-        // Dataset para la diferencia (Máxima - Mínima)
-        datasets.push({
-            label: 'Rango Restante',
-            data: labels.map(type => {
-                const diff = (maxProbsForType[type] - minProbsForType[type]) * 100;
-                return diff > 0 ? diff : 0; // Asegurar que no sea negativo
-            }),
-            backgroundColor: '#3498db', // Azul más claro
-            borderColor: '#3498db',
-            borderWidth: 1,
-            stack: 'combinedBars' // Apilar en el mismo grupo
-        });
-
-        // Dataset para la línea (Producto de tu Pronóstico)
-        datasets.push({
-            type: 'line',
-            label: 'Tu Pronóstico', // Etiqueta genérica
-            data: labels.map(type => {
-                // Solo mostrar la línea para el tipo seleccionado en el dropdown, otros NaN
-                return type === probabilityType ? (userProbsForType[type] * 100) : NaN; // Ya en porcentaje
-            }),
-            borderColor: '#f7921a', // Naranja/Amarillo
-            borderWidth: 3,
-            fill: false,
-            tension: 0, // Línea recta
-            pointRadius: 5,
-            pointBackgroundColor: '#f7921a',
-            yAxisID: 'y' // Usar el mismo eje Y
-        });
-
-
+    if (userPicksMadeCount === 0) {
+        probabilityChartMessage.style.display = 'block'; // Mostrar mensaje
         if (myProbabilityChart) {
-            myProbabilityChart.destroy();
+            myProbabilityChart.destroy(); // Destruir gráfico si no hay selecciones
+            myProbabilityChart = null;
         }
+        return;
+    } else {
+        probabilityChartMessage.style.display = 'none'; // Ocultar mensaje
+    }
 
-        myProbabilityChart = new Chart(probabilityChartCanvas, {
-            type: 'bar', // Tipo base es barra
-            data: {
-                labels: labelsDisplay, // Usar los labels para mostrar
-                datasets: datasets
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Probabilidad Combinada de Signos Seleccionados (Jornada 1-14)',
-                        font: { size: 16 }
-                    },
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false,
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null) {
-                                    const value = parseFloat(context.parsed.y);
-                                    const decimals = getAdaptiveDecimals(value);
-                                    label += value.toFixed(decimals) + '%';
-                                }
-                                return label;
+    const labels = ['jugados', 'lae', 'probables']; // Nombres de las propiedades en el JSON
+    const labelsDisplay = ['Jugados', 'LAE', 'Probables']; // Nombres para mostrar en el gráfico
+    const datasets = [];
+
+    let overallMaxProbCombined = 0; // Para el ajuste dinámico del eje Y
+
+    const minProbsForType = {}; // Producto de las probabilidades mínimas
+    const maxProbsForType = {}; // Producto de las probabilidades máximas
+    const userProbsForType = {}; // Producto de las probabilidades de los picks del usuario
+
+    labels.forEach(type => {
+        minProbsForType[type] = 1;
+        maxProbsForType[type] = 1;
+        userProbsForType[type] = 1;
+
+        jornadaData.matches.slice(0, 14).forEach((match, index) => {
+            const userPick = userSelections[index];
+            if (userPick !== null) {
+                const userPickProb = (match[type][userPick] || 0) / 100;
+                userProbsForType[type] *= userPickProb;
+
+                const probs = [
+                    (match[type]['1'] || 0) / 100,
+                    (match[type]['X'] || 0) / 100,
+                    (match[type]['2'] || 0) / 100
+                ];
+                const validProbs = probs.filter(p => p > 0); 
+                const minProb = validProbs.length > 0 ? Math.min(...validProbs) : 0;
+                const maxProb = validProbs.length > 0 ? Math.max(...validProbs) : 0;
+
+                minProbsForType[type] *= minProb;
+                maxProbsForType[type] *= maxProb;
+            }
+        });
+
+        // Actualizar el máximo general de las probabilidades combinadas
+        overallMaxProbCombined = Math.max(overallMaxProbCombined, maxProbsForType[type], userProbsForType[type]);
+    });
+
+    // Ajustar el valor máximo del eje Y
+    let yAxisMax = 0.0001; // Un valor mínimo por si todo es muy pequeño, pero no 0
+    if (overallMaxProbCombined > 0) {
+        yAxisMax = overallMaxProbCombined * 100 * 1.2; // Multiplicar por 100 para porcentaje, luego 20% de padding
+        // Redondear al alza a una "cifra redonda" cercana
+        if (yAxisMax < 0.001) yAxisMax = Math.ceil(yAxisMax * 1000000) / 1000000; // Ej. 0.000001
+        else if (yAxisMax < 0.01) yAxisMax = Math.ceil(yAxisMax * 100000) / 100000; // Ej. 0.00001
+        else if (yAxisMax < 0.1) yAxisMax = Math.ceil(yAxisMax * 10000) / 10000;    // Ej. 0.0001
+        else if (yAxisMax < 1) yAxisMax = Math.ceil(yAxisMax * 1000) / 1000;      // Ej. 0.001
+        else if (yAxisMax < 10) yAxisMax = Math.ceil(yAxisMax * 100) / 100;      // Ej. 0.01
+        else if (yAxisMax < 100) yAxisMax = Math.ceil(yAxisMax * 10) / 10;       // Ej. 0.1
+        else yAxisMax = Math.ceil(yAxisMax);                                  // Ej. 10, 100
+    }
+    yAxisMax = Math.min(yAxisMax, 100); // No exceder 100%
+
+    // ** NUEVO: Dataset para las barras de probabilidades MÁXIMAS (solamente) **
+    datasets.push({
+        label: 'Probabilidad Máxima', // Será el label de la barra única
+        data: labels.map(type => (maxProbsForType[type] * 100)), // Ya en porcentaje
+        backgroundColor: '#3498db', // Un solo color azul para la barra
+        borderColor: '#3498db',
+        borderWidth: 1,
+        // stack: 'combinedBars' // No es necesario stack si solo hay una barra
+    });
+
+    // ** NUEVO: Dataset para la línea (Producto de tu Pronóstico) - AHORA SIEMPRE CONTINUA **
+    datasets.push({
+        type: 'line',
+        label: 'Realidad', // CAMBIADO EL LABEL
+        data: labels.map(type => (userProbsForType[type] * 100)), // Todos los puntos de la línea
+        borderColor: '#f7921a', // Naranja/Amarillo
+        borderWidth: 3,
+        fill: false,
+        tension: 0, // Línea recta
+        pointRadius: 5,
+        pointBackgroundColor: '#f7921a',
+        yAxisID: 'y' // Usar el mismo eje Y
+    });
+
+
+    if (myProbabilityChart) {
+        myProbabilityChart.destroy();
+    }
+
+    myProbabilityChart = new Chart(probabilityChartCanvas, {
+        type: 'bar', // Tipo base es barra
+        data: {
+            labels: labelsDisplay, // Usar los labels para mostrar
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Probabilidad Combinada de Signos Seleccionados (Jornada 1-14)',
+                    font: { size: 16 }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
                             }
+                            if (context.parsed.y !== null) {
+                                const value = parseFloat(context.parsed.y);
+                                const decimals = getAdaptiveDecimals(value);
+                                label += value.toFixed(decimals) + '%';
+                            }
+                            return label;
                         }
                     },
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            filter: function(item, chart) {
-                                return item.datasetIndex === 0 || item.datasetIndex === 1 || item.datasetIndex === 2;
-                            },
-                            generateLabels: function(chart) {
-                                const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
-                                if (labels[2]) { // Asegúrate de que el label de la línea existe
-                                    labels[2].fillStyle = chart.data.datasets[2].borderColor; // Usar el borderColor del dataset como color de punto
-                                }
-                                return labels;
-                            }
+                    // Ajuste para mostrar solo el tooltip de la línea si está en la categoría seleccionada
+                    filter: function(context) {
+                        const selectedType = probabilityTypeSelect.value;
+                        const labelType = labels[context.dataIndex]; // 'jugados', 'lae', 'probables'
+                        
+                        // Si es el dataset de la línea (índice 1) Y es la categoría seleccionada
+                        if (context.datasetIndex === 1) { // 1 es el índice de la línea en 'datasets'
+                            return labelType === selectedType;
                         }
+                        return true; // Mostrar siempre los tooltips de las barras
                     }
                 },
-                scales: {
-                    x: {
-                        stacked: true, // Apilar barras en el eje X
-                        title: {
-                            display: true,
-                            text: 'Tipo de Análisis'
-                        }
-                    },
-                    y: {
-                        stacked: true, // Apilar en el eje Y también para que las barras se apilen
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Probabilidad (%)'
+                legend: {
+                    position: 'top',
+                    labels: {
+                        filter: function(item, chart) {
+                            // Mostrar solo el label de la barra y el de la línea
+                            return item.datasetIndex === 0 || item.datasetIndex === 1; // 0 es la barra, 1 es la línea
                         },
-                        max: yAxisMax, // ** EJE Y DINÁMICO **
-                        ticks: {
-                            callback: function(value) {
-                                const decimals = getAdaptiveDecimals(value);
-                                return value.toFixed(decimals) + '%';
+                        generateLabels: function(chart) {
+                            const labels = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+                            // Ajustar el color del punto de la leyenda de la línea (índice 1 en 'labels')
+                            if (labels[1]) {
+                                labels[1].fillStyle = chart.data.datasets[1].borderColor; // Color de la línea
                             }
+                            return labels;
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    // stacked: true, // No es necesario si no hay barras apiladas
+                    title: {
+                        display: true,
+                        text: 'Tipo de Análisis'
+                    }
+                },
+                y: {
+                    // stacked: true, // No es necesario si no hay barras apiladas
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Probabilidad (%)'
+                    },
+                    max: yAxisMax, // ** EJE Y DINÁMICO **
+                    ticks: {
+                        callback: function(value) {
+                            const decimals = getAdaptiveDecimals(value);
+                            return value.toFixed(decimals) + '%';
                         }
                     }
                 }
             }
         });
+        
+        // El código para asegurar el color de la leyenda ya está integrado en generateLabels de legend.labels.
     }
 
 

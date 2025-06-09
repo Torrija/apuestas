@@ -142,13 +142,13 @@
     opacity: 0.8;
 }
 
-/* Apuestas de la Peña - Listado de Coincidencias */
+/* Eliminar la regla .peña-bets-list o modificarla */
 .peña-bets-list {
-    /* Mantenemos el grid display para los grupos de aciertos */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
-    justify-content: center; /* Centrar el bloque de apuestas */
+    /* Este elemento ya no necesita ser un grid, solo un contenedor */
+    /* Asegurarse de que sus hijos (.peña-bet-group-card) se manejen con el grid de .peña-bets-list-container */
+    display: contents; /* Esto hace que los hijos directos de .peña-bets-list actúen como hijos directos de .peña-bets-list-container para el grid */
+    /* O si no funciona 'contents', simplemente eliminar reglas de display/grid aquí */
+    /* Puedes eliminar justify-content: center; de aquí si estaba */
 }
 
 /* Ajuste general para los títulos H3 dentro de las tarjetas de resumen */
@@ -402,13 +402,16 @@
     }
 }
 
-/* Nuevo estilo para el contenedor que centra la lista de apuestas */
+/* Reemplazar la regla .peña-bets-list-container */
 .peña-bets-list-container {
-    display: flex; /* Usamos flexbox para centrar su contenido */
-    /*justify-content: center;  Centra horizontalmente los elementos hijos */
-    /* max-width puede ser opcional si quieres un ancho máximo para el área de las cartas */
-    /* max-width: 1000px; */
-    /* margin: 0 auto; */ /* No necesario si el padre es un flex container centrado */
+    /* display: flex; /* Usamos flexbox para centrar su contenido */
+    /* justify-content: center; /* Centra horizontalmente los elementos hijos */
+    /* La idea es que este contenedor sea el que se comporte como GRID para los grupos */
+    display: grid; /* Convertir este contenedor a un grid */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Definir las columnas aquí */
+    gap: 20px; /* Espacio entre los grupos */
+    margin: 0 auto; /* Centrar el contenedor general */
+    max-width: 1000px; /* O un valor apropiado si quieres limitar el ancho máximo de la fila */
 }
 
 /* Estilos para la nueva sección del Gráfico de Probabilidades */
@@ -479,4 +482,23 @@
     padding: 20px;
     width: 100%;
     /* display: block; por defecto para mensaje */
+}
+
+/* Resaltado verde (asegurando la visualización) */
+/* Asegurar que el fondo verde se vea. Puede que necesitemos un line-height más explícito o una estructura interna. */
+/* Asegúrate de que las reglas para .bet-result-highlight, .bet-result-unselected, etc. sean las más recientes que te di. */
+/* Podríamos intentar aplicarles display: inline-flex; o display: inline-block; si aún hay problemas */
+
+/* Este bloque ya deberías tenerlo, solo aseguramos que el padding/margin sea correcto */
+.bet-combination-line .bet-result-highlight,
+.bet-combination-line .bet-result-unselected,
+.bet-combination-line .bet-result-incorrect,
+.bet-combination-line .bet-pleno15-highlight {
+    display: inline-block; /* Crucial para que el padding y background funcionen */
+    padding: 3px 6px; /* Más padding para que el fondo sea visible */
+    border-radius: 4px; /* Un poco más redondeado */
+    margin: 0 2px; /* Espacio entre los signos */
+    white-space: nowrap;
+    line-height: 1.2; /* Para una altura de línea consistente */
+    vertical-align: middle; /* Ayuda a alinear verticalmente si hay iconos */
 }
