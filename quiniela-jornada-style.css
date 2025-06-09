@@ -1,276 +1,3 @@
-/* Estilos específicos para la página de seguimiento de la Quiniela */
-
-/* Contenedores principales de las secciones */
-.quiniela-jornada-details,
-.user-prediction-summary,
-.probability-chart-section, /* Asegurar que la sección del gráfico también tenga los estilos de tarjeta */
-.peña-bets-results {
-    background-color: #fff;
-    padding: 30px;
-    margin-top: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    text-align: center;
-}
-
-/* Títulos de las secciones */
-.quiniela-jornada-details h2,
-.user-prediction-summary h2,
-.probability-chart-section h2,
-.peña-bets-results h2 {
-    color: #004D99;
-    margin-bottom: 25px;
-    font-size: 1.8em;
-}
-
-.jornada-number {
-    color: #f7921a; /* Color naranja para destacar el número de jornada */
-}
-
-/* --- Tabla de Partidos --- */
-.matches-table-container {
-    overflow-x: auto; /* Permite scroll horizontal en pantallas pequeñas */
-    margin-bottom: 20px;
-}
-
-.matches-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-    font-size: 0.9em;
-    min-width: 600px; /* Asegura que la tabla no sea demasiado estrecha en pantallas pequeñas */
-}
-
-.matches-table th,
-.matches-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-    vertical-align: middle;
-}
-
-.matches-table thead th {
-    background-color: #e0f2f7;
-    color: #004D99;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.matches-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.matches-table tbody tr:hover {
-    background-color: #f0f0f0;
-}
-
-.matches-table td:first-child {
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Selección de Resultados (Botones 1X2, 012M) */
-.selection-buttons-group {
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-    align-items: center;
-}
-
-.selection-button {
-    background-color: #eee;
-    border: 1px solid #ccc;
-    color: #555;
-    padding: 8px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.9em;
-    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
-    flex-grow: 1; /* Para que los botones se estiren y ocupen el espacio */
-    text-align: center;
-}
-
-.selection-button:hover {
-    background-color: #ddd;
-    border-color: #aaa;
-}
-
-.selection-button.selected {
-    background-color: #f7921a; /* Naranja de la Quiniela */
-    color: white;
-    border-color: #d67a0e;
-}
-
-/* Estilos para Pleno al 15 */
-.pleno15-selection {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap; /* Para que se adapten en móviles */
-    justify-content: center;
-    align-items: center;
-}
-
-.pleno15-selection .score-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.pleno15-selection .score-group label {
-    font-weight: bold;
-    color: #555;
-    font-size: 0.9em;
-}
-
-.pleno15-selection .score-buttons-group {
-    display: flex;
-    gap: 3px;
-}
-
-.pleno15-selection .selection-button {
-    padding: 6px 10px; /* Botones más pequeños para los scores */
-    font-size: 0.8em;
-}
-
-/* --- Resumen del Pronóstico del Usuario --- */
-.summary-cards .card h3 {
-    font-size: 1.2em; /* Mantener el tamaño de título */
-    margin-bottom: 15px; /* Espacio para el contenido */
-    color: #0056b3;
-}
-
-/* Estilos para la tabla de Aciertos Signos (1X2) */
-.aciertos-summary-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-    font-size: 0.9em; /* Tamaño de fuente para la tabla */
-    text-align: center;
-}
-
-.aciertos-summary-table th,
-.aciertos-summary-table td {
-    border: 1px solid #ddd;
-    padding: 8px 5px; /* Padding ajustado para celdas */
-}
-
-.aciertos-summary-table thead th {
-    background-color: #f0f8ff; /* Fondo ligeramente diferente para los encabezados */
-    color: #004D99;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.8em; /* Ajuste para encabezados */
-    padding: 8px 3px; /* Más compacto */
-}
-
-.aciertos-summary-table td {
-    font-size: 1.1em; /* Un poco más grande para los datos */
-}
-.aciertos-summary-table td:nth-child(2), /* Aciertos */
-.aciertos-summary-table td:nth-child(3) { /* Nº Ap. */
-    font-weight: bold;
-    color: #004D99;
-}
-.aciertos-summary-table td:nth-child(4) { /* % */
-    color: #28a745;
-    font-weight: bold;
-}
-
-/* El ID totalCorrectMatchesElem ahora contendrá la tabla, pero si el inicio es un párrafo (0/0) */
-#totalCorrectMatches {
-    /* Si es un p, asegurar que el tamaño sea adecuado */
-    font-size: 1em; /* Asegurar que no sea grande como el 0.00 EUR */
-    font-weight: normal;
-    color: #333;
-}
-
-/* Estilos para el Pleno al 15 en la tarjeta de resumen */
-#pleno15Correct {
-    font-size: 1.6em;
-    font-weight: bold;
-    color: #f7921a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-#pleno15Correct .fas {
-    font-size: 0.8em; /* Ajuste del icono para que no sea demasiado grande */
-}
-#pleno15Correct .fa-trophy { color: #f2c75a; } /* Color oro para trofeo */
-#pleno15Correct .fa-times-circle { color: #dc3545; } /* Color rojo para fallo */
-#pleno15Correct .fa-question-circle { color: #6c757d; } /* Color gris para no completado */
-
-/* Resumen del Pronóstico Quiniela del Usuario */
-#userPrediction {
-    font-family: 'Courier New', Courier, monospace;
-    letter-spacing: 2px;
-    font-size: 1.6em;
-    color: #f7921a;
-}
-#userPrediction .pleno15-user-scores {
-    font-size: 0.8em;
-    opacity: 0.8;
-}
-
-/* --- Gráfico de Probabilidades --- */
-.chart-controls {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 25px;
-    flex-wrap: wrap; /* Para que se adapte en pantallas pequeñas */
-}
-
-.chart-controls label {
-    font-weight: bold;
-    color: #555;
-    font-size: 1em;
-}
-
-.chart-controls select {
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-    background-color: #fdfdfd;
-    min-width: 180px; /* Ancho mínimo para el selector */
-}
-
-.chart-container-quiniela {
-    position: relative; /* Para el mensaje de carga */
-    max-width: 800px; /* Ancho máximo del gráfico */
-    height: 400px; /* Altura fija para el gráfico */
-    margin: 0 auto;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
-    display: flex; /* Para centrar el mensaje de carga/sin datos */
-    align-items: center;
-    justify-content: center;
-    padding: 15px; /* Padding interno para el canvas */
-}
-
-.chart-container-quiniela canvas {
-    max-width: 100%;
-    max-height: 100%;
-}
-
-/* Mensaje cuando el gráfico no se muestra */
-.probability-chart-section .loading-message {
-    font-style: italic;
-    color: #888;
-    text-align: center;
-    position: absolute; /* Para superponer al canvas si es necesario */
-    padding: 20px;
-    width: 100%;
-    /* display: block; por defecto para mensaje */
-}
-
-
 /* --- Apuestas de la Peña (Agrupadas) --- */
 
 /* Contenedor que maneja el GRID para los grupos de aciertos */
@@ -324,19 +51,27 @@
 /* Estilos para cada línea de combinación de apuesta */
 .bet-combination-line {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 1em;
-    letter-spacing: 0.5px; /* Reducir el espacio entre caracteres */
+    font-size: 0.9em; /* Reducir aún más el tamaño de la fuente para que quepa */
+    letter-spacing: 0.2px; /* Reducir aún más el espacio entre caracteres */
     word-wrap: break-word;
-    line-height: 1.4; /* Reducir la separación vertical entre líneas */
-    margin-bottom: 2px; /* Pequeño margen para separar líneas, pero menos que antes */
+    line-height: 1.2; /* Reducir la separación vertical entre líneas */
+    margin-bottom: 4px; /* Un poco más de margen para que no se peguen mucho */
     display: flex; /* Para alinear picks e iconos */
     align-items: center;
-    gap: 5px; /* Espacio entre los picks y el icono final */
+    /* overflow-x: auto; /* Permitir scroll horizontal si la línea es demasiado larga */
+    /* white-space: nowrap; /* Asegurar que la línea no se rompa */
+    /* Estas dos propiedades no son necesarias aquí, ya las manejan los spans con nowrap y el contenedor del span con overflow */
 }
 
 /* Ajustes para los spans de los picks (asegurar el resaltado) */
 .bet-combination-line span {
     display: inline-block; /* Crucial para que el padding y background funcionen */
+    padding: 1px 2px; /* Reducir padding para que los signos estén más juntos */
+    border-radius: 2px; /* Un poco menos redondeado */
+    margin: 0 0.5px; /* Reducir el margen entre los signos para compactar */
+    white-space: nowrap; /* Impide que los signos individuales se rompan */
+    line-height: 1.2; /* Consistencia en la altura de línea */
+    vertical-align: middle; /* Ayuda a alinear verticalmente */
 }
 
 /* Colores de resaltado de los picks */
@@ -344,31 +79,27 @@
     background-color: #e6ffe6; /* Fondo verde claro para aciertos */
     font-weight: bold;
     color: #28a745;
-    padding: 2px 4px; /* Asegurar padding para el fondo */
-    border-radius: 3px;
 }
 
 .bet-combination-line .bet-result-incorrect {
     color: #dc3545; /* Rojo para picks incorrectos (solo texto) */
     font-weight: bold;
-    padding: 2px 4px;
 }
 
 .bet-combination-line .bet-result-unselected {
     background-color: #e0f2f7; /* Azul claro para partidos no seleccionados por el usuario */
     font-weight: bold;
     color: #004D99; /* Texto azul oscuro */
-    padding: 2px 4px;
-    border-radius: 3px;
 }
 
 /* Estilos para el Pleno al 15 en la línea de combinación */
 .bet-combination-line .pleno15-scores-display {
-    margin-left: 8px; /* Espacio entre los 14 partidos y el pleno al 15 */
+    margin-left: 5px; /* Reducir el margen para que esté más cerca de los 14 partidos */
+    /* Asegurar que los spans dentro de .pleno15-scores-display también se vean compactos */
 }
 .bet-combination-line .pleno15-scores-display span {
-    padding: 2px 4px; /* Fondo para los picks del pleno al 15 */
-    border-radius: 3px;
+    padding: 1px 2px; /* Compactar padding del pleno al 15 */
+    border-radius: 2px;
 }
 .bet-combination-line .pleno15-scores-display .bet-pleno15-highlight {
     background-color: #ccffcc; /* Verde más intenso para Pleno al 15 */
@@ -377,9 +108,15 @@
 }
 
 /* Iconos de Acierto/Fallo en las líneas de apuesta */
+.bet-icons-summary {
+    display: flex; /* Para que el icono esté alineado */
+    align-items: center;
+    margin-left: auto; /* Empuja el icono al final de la línea */
+    flex-shrink: 0; /* Evita que el icono se encoja */
+    padding-left: 5px; /* Espacio para que el icono no se pegue al pleno al 15 */
+}
 .bet-icons-summary .fas {
     font-size: 0.9em;
-    margin-left: 5px; /* Espacio entre el pleno al 15 y el icono */
 }
 .bet-icons-summary .pleno15-icon-correct {
     color: #f2c75a; /* Trofeo oro */
@@ -389,7 +126,7 @@
 }
 
 /* Asegurar que el mensaje de carga en la lista de la peña no se vea como tarjeta */
-.peña-bets-list-container > p.loading-message { /* Ajuste del selector */
+.peña-bets-list-container > p.loading-message {
     grid-column: 1 / -1; /* Ocupar todo el ancho del grid */
     background: none;
     box-shadow: none;
@@ -415,13 +152,13 @@
     }
 
     .matches-table {
-        min-width: 500px; /* Asegura que la tabla tenga un scroll mínimo */
+        min-width: 500px;
         font-size: 0.85em;
     }
 
     /* En pantallas medianas y pequeñas, los grupos de aciertos pueden ir en 1 o 2 columnas */
     .peña-bets-list-container {
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Más flexible para pantallas más pequeñas */
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Más flexible */
         max-width: 100%; /* Permite que ocupe todo el ancho disponible */
     }
 
@@ -448,11 +185,11 @@
         padding: 5px 2px;
     }
     .matches-table {
-        min-width: 400px; /* Más estrecho para móviles muy pequeños */
+        min-width: 400px;
         font-size: 0.8em;
     }
     .pleno15-selection {
-        flex-direction: column; /* Apila local y visitante en pleno al 15 */
+        flex-direction: column;
         gap: 15px;
     }
     .pleno15-selection .score-group {
@@ -463,11 +200,11 @@
         justify-content: stretch;
     }
     .bet-combination-line {
-        font-size: 0.9em; /* Ligeramente más pequeño para que quepa mejor */
-        line-height: 1.3;
+        font-size: 0.8em; /* Aún más pequeño en móviles muy pequeños */
+        letter-spacing: 0.1px;
     }
     .peña-bet-group-card h3 {
-        font-size: 1.1em; /* Ajuste para el título del grupo */
+        font-size: 1.1em;
     }
 
     /* Ajuste de tamaño de fuente para la tabla de aciertos en pantallas muy pequeñas */
