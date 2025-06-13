@@ -700,5 +700,600 @@
         "max_prize": "500.000€"
       },
       "ticket_code": "90-591-2-17-01 844-39069101-268 8078"
+    },  {
+      "id": "1C_RESUMEN_PRIMITIVA_VENTA",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "LOTERIA PRIMITIVA",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 4.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "14 JUN 25",
+      "details": {
+        "bets_count": 4,
+        "numbers_per_bet": [
+          ["01", "22", "37", "39", "45", "48"],
+          ["08", "10", "26", "33", "40", "42"],
+          ["03", "08", "18", "21", "29", "45"],
+          ["24", "25", "41", "43", "46", "47"]
+        ],
+        "reintegro": 7,
+        "joker": "NO"
+      },
+      "ticket_code": "12767-0102-17066-90149-90188-55159-53753"
+    },
+    {
+      "id": "2C_RESUMEN_BONOLOTO_VENTA",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "BONOLOTO",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 3.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "13 JUN 25",
+      "details": {
+        "bets_count": 6,
+        "numbers_per_bet": [
+          ["09", "17", "18", "26", "36", "38"],
+          ["08", "09", "19", "35", "40", "45"],
+          ["03", "23", "32", "34", "40", "46"],
+          ["04", "09", "15", "16", "42", "45"],
+          ["07", "08", "14", "27", "35", "40"],
+          ["01", "12", "17", "26", "47", "49"]
+        ],
+        "reintegro": 8
+      },
+      "ticket_code": "12767-0202-04135-15814-17867-89780-13967"
+    },
+    {
+      "id": "3C_RESUMEN_QUINIELA_VENTA_1",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "QUINIELA",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 6.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "17 JUN 25",
+      "details": {
+        "bets_count": 8,
+        "match_15_pick": "M-0",
+        "quiniela_grid_example": [
+          ["2", "X", "2", "2", "2", "X", "2", "2"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["1", "1", "2", "1", "1", "2", "1", "2"],
+          ["X", "X", "X", "2", "X", "X", "2", "X"],
+          ["1", "1", "1", "X", "1", "1", "1", "1"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["2", "X", "2", "2", "X", "2", "2", "X"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "2", "2", "2", "2", "2", "2", "X"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "X", "X", "2", "X", "X", "2", "X"],
+          ["1", "2", "2", "2", "2", "1", "1", "2"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "X", "X", "X", "2", "2", "2", "2"]
+        ]
+      },
+      "ticket_code": "12767-0302-14700-34378-75235-50958-63670"
+    },
+    {
+      "id": "3C_RESUMEN_QUINIELA_VENTA_2",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "QUINIELA",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 6.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "17 JUN 25",
+      "details": {
+        "bets_count": 8,
+        "match_15_pick": "M-0",
+        "quiniela_grid_example": [
+          ["X", "2", "2", "2", "X", "2", "2", "X"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["1", "1", "2", "1", "1", "2", "1", "2"],
+          ["X", "X", "X", "2", "X", "X", "2", "X"],
+          ["1", "X", "1", "X", "1", "1", "1", "1"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["2", "2", "2", "X", "X", "2", "2", "2"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "2", "2", "2", "2", "2", "2", "X"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "X", "X", "2", "X", "X", "2", "X"],
+          ["2", "1", "2", "2", "1", "1", "1", "1"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["2", "2", "X", "2", "2", "2", "2", "2"]
+        ]
+      },
+      "ticket_code": "12767-0302-17094-63817-01760-38819-21972"
+    },
+    {
+      "id": "3C_RESUMEN_QUINIELA_VENTA_3",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "QUINIELA",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 6.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "17 JUN 25",
+      "details": {
+        "bets_count": 8,
+        "match_15_pick": "M-0",
+        "quiniela_grid_example": [
+          ["X", "2", "2", "2", "2", "X", "2", "2"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["1", "1", "2", "2", "1", "1", "1", "2"],
+          ["X", "X", "2", "2", "X", "X", "2", "X"],
+          ["1", "X", "1", "1", "X", "1", "1", "1"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["2", "2", "2", "X", "X", "X", "2", "2"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["2", "2", "X", "2", "X", "2", "X", "X"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "2", "2", "2", "X", "X", "2", "X"],
+          ["1", "1", "2", "2", "1", "1", "1", "1"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "2", "2", "2", "X", "X", "2", "X"]
+        ]
+      },
+      "ticket_code": "12767-0302-15018-92795-44211-29416-05198"
+    },
+    {
+      "id": "3C_RESUMEN_QUINIELA_VENTA_4",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "QUINIELA",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 6.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "17 JUN 25",
+      "details": {
+        "bets_count": 8,
+        "match_15_pick": "M-0",
+        "quiniela_grid_example": [
+          ["2", "X", "X", "2", "2", "X", "2", "2"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["1", "1", "2", "1", "1", "2", "1", "2"],
+          ["X", "X", "X", "2", "X", "X", "2", "X"],
+          ["1", "1", "1", "X", "1", "1", "1", "1"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["2", "X", "2", "2", "X", "2", "2", "X"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "2", "2", "2", "2", "2", "2", "X"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "X", "X", "2", "X", "X", "2", "X"],
+          ["2", "1", "2", "2", "1", "1", "1", "1"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "2", "2", "2", "X", "X", "2", "X"]
+        ]
+      },
+      "ticket_code": "12767-0302-13629-55919-49536-69212-03384"
+    },
+    {
+      "id": "3C_RESUMEN_QUINIELA_VENTA_5",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "QUINIELA",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 6.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "17 JUN 25",
+      "details": {
+        "bets_count": 8,
+        "match_15_pick": "M-0",
+        "quiniela_grid_example": [
+          ["X", "2", "2", "2", "2", "X", "2", "2"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["1", "1", "2", "2", "1", "1", "1", "2"],
+          ["X", "X", "2", "2", "X", "X", "2", "X"],
+          ["1", "X", "1", "1", "X", "1", "1", "1"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["2", "2", "2", "X", "X", "X", "2", "2"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["2", "2", "X", "2", "X", "2", "X", "X"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "2", "2", "2", "X", "X", "2", "X"],
+          ["1", "1", "2", "2", "1", "1", "1", "1"],
+          ["1", "1", "1", "1", "1", "1", "1", "1"],
+          ["X", "2", "2", "2", "X", "X", "2", "X"]
+        ]
+      },
+      "ticket_code": "12767-0302-10070-54760-88170-72675-25839"
+    },
+    {
+      "id": "3C_RESUMEN_QUINIELA_VENTA_6",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "QUINIELA",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 2.25,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "17 JUN 25",
+      "details": {
+        "bets_count": 3,
+        "match_15_pick": "M-0",
+        "quiniela_grid_example": [
+          ["2", "2", "X"],
+          ["1", "1", "1"],
+          ["1", "1", "1"],
+          ["X", "X", "2"],
+          ["1", "X", "1"],
+          ["1", "1", "1"],
+          ["X", "2", "2"],
+          ["1", "1", "1"],
+          ["2", "X", "2"],
+          ["1", "1", "1"],
+          ["2", "X", "X"],
+          ["1", "2", "2"],
+          ["1", "1", "1"],
+          ["2", "2", "2"]
+        ]
+      },
+      "ticket_code": "12767-0302-11354-91225-04966-82071-28229"
+    },
+    {
+      "id": "4C_RESUMEN_GORDO_PRIMITIVA_VENTA",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "GORDO PRIMITIVA",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 3.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "15 JUN 25",
+      "details": {
+        "bets_count": 2,
+        "numbers_per_bet": [
+          ["40", "42", "44", "50", "52", "00"],
+          ["15", "25", "33", "38", "41", "06"]
+        ]
+      },
+      "ticket_code": "12767-0402-04717-02394-89750-58243-42860"
+    },
+    {
+      "id": "5C_RESUMEN_LOTERIA_NACIONAL_VENTA",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "LOTERIA NACIONAL",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 6.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "14 JUN 25",
+      "details": {
+        "number": "12241",
+        "serie": "3",
+        "fraccion": "10",
+        "price_per_decimo": "6 EUROS"
+      },
+      "ticket_code": "5048510003>0122414552"
+    },
+    {
+      "id": "6C_RESUMEN_EUROMILLONES_VENTA_1",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "EUROMILLONES",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 12.50,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "13 JUN 25",
+      "details": {
+        "bets_count": 5,
+        "numbers_per_bet": [
+          ["13", "33", "40", "47", "48", "03", "08"],
+          ["15", "33", "43", "48", "50", "05", "10"],
+          ["15", "33", "44", "45", "48", "01", "10"],
+          ["15", "33", "40", "48", "50", "04", "11"],
+          ["14", "33", "38", "47", "48", "03", "12"]
+        ],
+        "el_millon_code": "QJX10697 a QJX10701"
+      },
+      "ticket_code": "12767-0702-16095-23898-11255-68586-12969"
+    },
+    {
+      "id": "6C_RESUMEN_EUROMILLONES_VENTA_2",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "EUROMILLONES",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 12.50,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "13 JUN 25",
+      "details": {
+        "bets_count": 5,
+        "numbers_per_bet": [
+          ["19", "34", "38", "43", "49", "03", "08"],
+          ["12", "33", "43", "47", "48", "01", "08"],
+          ["20", "35", "47", "49", "50", "06", "07"],
+          ["14", "33", "43", "48", "50", "06", "11"],
+          ["14", "33", "43", "48", "50", "05", "10"]
+        ],
+        "el_millon_code": "QJX11026 a QJX11030"
+      },
+      "ticket_code": "12767-0702-02030-72694-26154-51480-45784"
+    },
+    {
+      "id": "6C_RESUMEN_EUROMILLONES_VENTA_3",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "EUROMILLONES",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 12.50,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "13 JUN 25",
+      "details": {
+        "bets_count": 5,
+        "numbers_per_bet": [
+          ["14", "33", "38", "47", "48", "06", "07"],
+          ["12", "33", "43", "47", "48", "04", "07"],
+          ["15", "34", "38", "42", "49", "04", "09"],
+          ["14", "33", "43", "48", "50", "06", "09"],
+          ["15", "35", "44", "48", "50", "01", "12"]
+        ],
+        "el_millon_code": "QJX10861 a QJX10865"
+      },
+      "ticket_code": "12767-0702-00646-10589-15754-99148-39618"
+    },
+    {
+      "id": "7C_RESUMEN_LOTERIA_NACIONAL_JUEVES_VENTA_1",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "LOTERIA NACIONAL JUEVES",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 3.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "19 JUN 25",
+      "details": {
+        "number": "14540",
+        "serie": "5",
+        "fraccion": "4",
+        "price_per_decimo": "3€"
+      },
+      "ticket_code": "6049504005>0145401236"
+    },
+    {
+      "id": "7C_RESUMEN_LOTERIA_NACIONAL_JUEVES_VENTA_2",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "venta",
+      "game": "LOTERIA NACIONAL JUEVES",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": 3.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "19 JUN 25",
+      "details": {
+        "number": "01975",
+        "serie": "2",
+        "fraccion": "8",
+        "price_per_decimo": "3€"
+      },
+      "ticket_code": "6049508002>0019758829"
+    },
+    {
+      "id": "ONCE_CUPONAZO_1",
+      "source": "ONCE",
+      "type": "venta",
+      "game": "CUPONAZO",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": null,
+      "agent_id": null,
+      "amount": 3.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "13 JUN 25",
+      "details": {
+        "serie": "084",
+        "number": "83496",
+        "max_prize": "6.000.000€"
+      },
+      "ticket_code": "905901810513062583496084"
+    },
+    {
+      "id": "ONCE_CUPONAZO_2",
+      "source": "ONCE",
+      "type": "venta",
+      "game": "CUPONAZO",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": null,
+      "agent_id": null,
+      "amount": 3.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "13 JUN 25",
+      "details": {
+        "serie": "031",
+        "number": "70529",
+        "max_prize": "6.000.000€"
+      },
+      "ticket_code": "905901480513062570529031"
+    },
+    {
+      "id": "ONCE_CUPON_DIARIO_1",
+      "source": "ONCE",
+      "type": "venta",
+      "game": "CUPON DIARIO",
+      "date_transaction": "13 JUN 2025",
+      "time_transaction": "18:23",
+      "agent_id": null,
+      "amount": 2.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "18 JUN 25",
+      "details": {
+        "serie": "001",
+        "number": "68054",
+        "max_prize": "500.000€"
+      },
+      "ticket_code": "90-591-2-78-01 851-62870699-076 8085"
+    },
+    {
+      "id": "ONCE_CUPON_DIARIO_2",
+      "source": "ONCE",
+      "type": "venta",
+      "game": "CUPON DIARIO",
+      "date_transaction": "13 JUN 2025",
+      "time_transaction": "18:23",
+      "agent_id": null,
+      "amount": 2.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "17 JUN 25",
+      "details": {
+        "serie": "001",
+        "number": "29837",
+        "max_prize": "500.000€"
+      },
+      "ticket_code": "90-591-2-16-01 851-56645294-332 8084"
+    },
+    {
+      "id": "ONCE_CUPON_DIARIO_3",
+      "source": "ONCE",
+      "type": "venta",
+      "game": "CUPON DIARIO",
+      "date_transaction": "13 JUN 2025",
+      "time_transaction": "18:22",
+      "agent_id": null,
+      "amount": 2.00,
+      "currency": "EUR",
+      "status": "pending",
+      "draw_date": "16 JUN 25",
+      "details": {
+        "serie": "025",
+        "number": "98448",
+        "max_prize": "500.000€"
+      },
+      "ticket_code": "90-591-2-85-01 851-00970159-332 8083"
+    },
+    {
+      "id": "1C_RESUMEN_PRIMITIVA_PAGO",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "pago",
+      "game": "LOTERIA PRIMITIVA",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": -7.00,
+      "currency": "EUR",
+      "status": "played",
+      "draw_date": "14 JUN 25",
+      "details": {
+        "won_bets": 1,
+        "prize_source": "Previous Primitiva draw"
+      },
+      "ticket_code": "12767-0102-17066-90149-90188-55159-53753"
+    },
+    {
+      "id": "1C_RESUMEN_QUINIELA_PAGO",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "pago",
+      "game": "QUINIELA",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": -5.30,
+      "currency": "EUR",
+      "status": "played",
+      "draw_date": "17 JUN 25",
+      "details": {
+        "won_bets": 1,
+        "prize_source": "Previous Quiniela draw"
+      },
+      "ticket_code": "12767-0302-14700-34378-75235-50958-63670"
+    },
+    {
+      "id": "1C_RESUMEN_GORDO_PRIMITIVA_PAGO",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "pago",
+      "game": "GORDO PRIMITIVA",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": -3.00,
+      "currency": "EUR",
+      "status": "played",
+      "draw_date": "15 JUN 25",
+      "details": {
+        "won_bets": 1,
+        "prize_source": "Previous Gordo Primitiva draw"
+      },
+      "ticket_code": "12767-0402-04717-02394-89750-58243-42860"
+    },
+    {
+      "id": "4C_RESUMEN_EUROMILLONES_PAGO",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "pago",
+      "game": "EUROMILLONES",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": -21.57,
+      "currency": "EUR",
+      "status": "played",
+      "draw_date": "13 JUN 25",
+      "details": {
+        "won_bets": 4,
+        "prize_source": "Previous Euromillones draw"
+      },
+      "ticket_code": "12767-0702-16095-23898-11255-68586-12969"
+    },
+    {
+      "id": "1C_RESUMEN_LOTERIA_NACIONAL_JUEVES_PAGO",
+      "source": "Loterias y Apuestas del Estado",
+      "type": "pago",
+      "game": "LOT. NACIONAL JUEVES",
+      "date_transaction": "13 JUN 25",
+      "time_transaction": "18:20:45",
+      "agent_id": "71485-0",
+      "amount": -3.00,
+      "currency": "EUR",
+      "status": "played",
+      "draw_date": "19 JUN 25",
+      "details": {
+        "won_bets": 1,
+        "prize_source": "Previous Lotería Nacional Jueves draw"
+      },
+      "ticket_code": "6049504005>0145401236"
     }
   ]
