@@ -430,3 +430,34 @@ body {
 .main-nav .nav-button:visited { /* Asegura que los enlaces visitados también se vean blancos */
     color: white;
 }
+
+/* Estilos adicionales para la tarjeta Balance Neto / ROI */
+.summary-cards .card.highlight p#netBalance {
+    display: flex;
+    flex-direction: column; /* Apilar el balance y el ROI */
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2; /* Compactar las líneas */
+}
+
+.summary-cards .card.highlight p#netBalance .balance-value {
+    font-size: 1.8em; /* Tamaño grande para el balance neto */
+    font-weight: bold;
+}
+
+.summary-cards .card.highlight p#netBalance .roi-value {
+    font-size: 0.9em; /* Tamaño más pequeño para el ROI */
+    font-weight: normal;
+    opacity: 0.8;
+}
+
+/* Asegurar que el color negativo/positivo se aplique al balance value y el ROI */
+.summary-cards .card p.negative-balance .balance-value,
+.summary-cards .card p.negative-balance .roi-value {
+    color: #dc3545; /* Rojo para balance/ROI negativo */
+}
+
+.summary-cards .card p.highlight .balance-value,
+.summary-cards .card p.highlight .roi-value {
+    color: #28a745; /* Verde para balance/ROI positivo */
+}

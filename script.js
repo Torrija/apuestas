@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Funciones de Cálculo y Resumen ---
-
+    // Tu función updateSummary(bets) actualizada
     function updateSummary(bets) {
         let totalSpent = 0;
         let totalWon = 0;
@@ -203,11 +203,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const netBalance = totalWon - totalSpent; // Premios menos Gastos
 
+        // --- Cálculo del ROI ---
+        let roi = 0;
+        if (totalSpent > 0) { // Evitar división por cero
+            roi = (netBalance / totalSpent) * 100;
+        }
+        const roiDisplay = roi.toFixed(2) + '%'; // Formatear a 2 decimales y añadir %
+
         totalSpentElem.textContent = formatCurrency(totalSpent);
         totalWonElem.textContent = formatCurrency(totalWon);
-        netBalanceElem.textContent = formatCurrency(netBalance);
 
-        // Actualizar la clase para el estilo de balance
+        // --- Modificación para mostrar Balance Neto / ROI ---
+        netBalanceElem.innerHTML = `
+            <span class="balance-value">${formatCurrency(netBalance)}</span>
+            <span class="roi-value"> / ${roiDisplay}</span>
+        `;
+
+        // Actualizar la clase para el estilo de balance (color del balance neto, el ROI tomará el mismo color)
         if (netBalance < 0) {
             netBalanceElem.classList.remove('highlight');
             netBalanceElem.classList.add('negative-balance');
