@@ -531,21 +531,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     // --- Inicialización ---
 
     async function initializeQuinielaPage() {
         clearMatchesTable(); // Mostrar mensaje de carga inicial
 
         try {
+            // Define aquí la jornada actual que quieres cargar
+            const currentJornadaNumber = 67; // <--- ESTA ES LA LÍNEA QUE DEBE ESTAR Y CON 67
+
             // Cargar datos de los partidos de la jornada
-            const jornadaResponse = await fetch('quiniela_jornada_66.json');
-            if (!jornadaResponse.ok) throw new Error(`HTTP error! status: ${jornadaResponse.status} for quiniela_jornada_66.json`);
+            const jornadaResponse = await fetch(`quiniela_jornada_${currentJornadaNumber}.json`);
+            if (!jornadaResponse.ok) throw new Error(`HTTP error! status: ${jornadaResponse.status} for quiniela_jornada_${currentJornadaNumber}.json`);
             jornadaData = await jornadaResponse.json();
 
             // Cargar apuestas de la peña
-            const peñaBetsResponse = await fetch('quiniela_bets_jornada_66.json');
-            if (!peñaBetsResponse.ok) throw new Error(`HTTP error! status: ${peñaBetsResponse.status} for quiniela_bets_jornada_66.json`);
+            const peñaBetsResponse = await fetch(`quiniela_bets_jornada_${currentJornadaNumber}.json`);
+            if (!peñaBetsResponse.ok) throw new Error(`HTTP error! status: ${peñaBetsResponse.status} for quiniela_bets_jornada_${currentJornadaNumber}.json`);
             peñaBets = await peñaBetsResponse.json();
 
             renderMatchesTable(jornadaData);
