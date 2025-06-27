@@ -1,0 +1,140 @@
+{
+    "jornada_number": 70,
+    "matches": [
+      {
+        "id": 1,
+        "home_team": "PALMEIRAS",
+        "away_team": "BOTAFOGO",
+        "day_time": "SAB 1X2",
+        "jugados": {"1": 46, "X": 31, "2": 23},
+        "lae": {"1": 47, "X": 27, "2": 26},
+        "probables": {"1": 40, "X": 32, "2": 28}
+      },
+      {
+        "id": 2,
+        "home_team": "BENFICA",
+        "away_team": "CHELSEA",
+        "day_time": "SAB 22:00",
+        "jugados": {"1": 28, "X": 26, "2": 46},
+        "lae": {"1": 51, "X": 24, "2": 25},
+        "probables": {"1": 27, "X": 28, "2": 45}
+      },
+      {
+        "id": 3,
+        "home_team": "PSG",
+        "away_team": "INTER MIAMI",
+        "day_time": "DOM 18:00",
+        "jugados": {"1": 89, "X": 6, "2": 5},
+        "lae": {"1": 55, "X": 23, "2": 22},
+        "probables": {"1": 78, "X": 14, "2": 8}
+      },
+      {
+        "id": 4,
+        "home_team": "FLAMENGO",
+        "away_team": "B.MUNICH",
+        "day_time": "DOM 22:00",
+        "jugados": {"1": 12, "X": 18, "2": 70},
+        "lae": {"1": 32, "X": 22, "2": 46},
+        "probables": {"1": 20, "X": 24, "2": 56}
+      },
+      {
+        "id": 5,
+        "home_team": "INTER",
+        "away_team": "FLUMINENSE",
+        "day_time": "LUN 21:00",
+        "jugados": {"1": 67, "X": 19, "2": 14},
+        "lae": {"1": 53, "X": 24, "2": 23},
+        "probables": {"1": 55, "X": 26, "2": 19}
+      },
+      {
+        "id": 6,
+        "home_team": "MAN.CITY",
+        "away_team": "AL-HILAL",
+        "day_time": "MAR 03:00",
+        "jugados": {"1": 79, "X": 11, "2": 10},
+        "lae": {"1": 49, "X": 26, "2": 25},
+        "probables": {"1": 72, "X": 17, "2": 11}
+      },
+      {
+        "id": 7,
+        "home_team": "R.MADRID",
+        "away_team": "JUVENTUS",
+        "day_time": "MAR 21:00",
+        "jugados": {"1": 68, "X": 16, "2": 16},
+        "lae": {"1": 41, "X": 24, "2": 35},
+        "probables": {"1": 57, "X": 25, "2": 18}
+      },
+      {
+        "id": 8,
+        "home_team": "HAMMARBY",
+        "away_team": "HALMSTADS",
+        "day_time": "SAB 15:00",
+        "jugados": {"1": 84, "X": 8, "2": 8},
+        "lae": {"1": 49, "X": 24, "2": 27},
+        "probables": {"1": 74, "X": 17, "2": 9}
+      },
+      {
+        "id": 9,
+        "home_team": "OPORTO",
+        "away_team": "SIRIUS",
+        "day_time": "SAB 17:30",
+        "jugados": {"1": 30, "X": 30, "2": 40},
+        "lae": {"1": 34, "X": 28, "2": 38},
+        "probables": {"1": 32, "X": 28, "2": 40}
+      },
+      {
+        "id": 10,
+        "home_team": "DEGERFORS",
+        "away_team": "BROMMAPOJKA...",
+        "day_time": "DOM 14:00",
+        "jugados": {"1": 52, "X": 25, "2": 23},
+        "lae": {"1": 43, "X": 27, "2": 30},
+        "probables": {"1": 40, "X": 27, "2": 33}
+      },
+      {
+        "id": 11,
+        "home_team": "AIK GOTEBORG",
+        "away_team": "HACKEN",
+        "day_time": "DOM 14:00",
+        "jugados": {"1": 55, "X": 28, "2": 17},
+        "lae": {"1": 52, "X": 25, "2": 23},
+        "probables": {"1": 47, "X": 29, "2": 24}
+      },
+      {
+        "id": 12,
+        "home_team": "HACKEN",
+        "away_team": "GAIS",
+        "day_time": "DOM 16:30",
+        "jugados": {"1": 41, "X": 26, "2": 33},
+        "lae": {"1": 37, "X": 30, "2": 33},
+        "probables": {"1": 39, "X": 27, "2": 34}
+      },
+      {
+        "id": 13,
+        "home_team": "VARNAMO",
+        "away_team": "ELFSBORG",
+        "day_time": "DOM 16:30",
+        "jugados": {"1": 11, "X": 27, "2": 62},
+        "lae": {"1": 36, "X": 27, "2": 37},
+        "probables": {"1": 24, "X": 26, "2": 50}
+      },
+      {
+        "id": 14,
+        "home_team": "DJURGARDENS",
+        "away_team": "NORRKOPING",
+        "day_time": "LUN 19:00",
+        "jugados": {"1": 56, "X": 28, "2": 16},
+        "lae": {"1": 40, "X": 29, "2": 31},
+        "probables": {"1": 56, "X": 24, "2": 20}
+      },
+      {
+        "id": 15,
+        "home_team": "MJALLBY",
+        "away_team": "MALMO",
+        "day_time": "LUN 19:00",
+        "jugados": {"0": 8, "1": 50, "2": 35, "M": 7},
+        "lae": {"0": 12, "1": 41, "2": 33, "M": 14},
+        "probables": {"0": 27, "1": 36, "2": 23, "M": 14}
+      }
+    ]
+  }

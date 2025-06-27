@@ -538,7 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             // Define aquí la jornada actual que quieres cargar
-            const currentJornadaNumber = 69; // <--- ESTA ES LA LÍNEA QUE DEBE ESTAR Y CON 69
+            const currentJornadaNumber = 70; // <--- ESTA ES LA LÍNEA QUE DEBE ESTAR Y CON 69
 
             // Cargar datos de los partidos de la jornada
             const jornadaResponse = await fetch(`quiniela_jornada_${currentJornadaNumber}.json`);
