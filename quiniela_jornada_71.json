@@ -1,0 +1,140 @@
+{
+    "jornada_number": 71,
+    "matches": [
+      {
+        "id": 1,
+        "home_team": "FLUMINENSE",
+        "away_team": "AL-HILAL",
+        "day_time": "SAB 15:00",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 31, "X": 30, "2": 39}
+      },
+      {
+        "id": 2,
+        "home_team": "PALMEIRAS",
+        "away_team": "CHELSEA",
+        "day_time": "SAB 17:00",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 24, "X": 29, "2": 47}
+      },
+      {
+        "id": 3,
+        "home_team": "PSG",
+        "away_team": "B.MUNICH",
+        "day_time": "SAB 19:00",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 42, "X": 27, "2": 31}
+      },
+      {
+        "id": 4,
+        "home_team": "R.MADRID",
+        "away_team": "B.DORTMUND",
+        "day_time": "SAB 21:00",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 58, "X": 22, "2": 20}
+      },
+      {
+        "id": 5,
+        "home_team": "GAIS",
+        "away_team": "MALMO",
+        "day_time": "DOM 14:30",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 36, "X": 28, "2": 36}
+      },
+      {
+        "id": 6,
+        "home_team": "OSTERS",
+        "away_team": "MJALLBY",
+        "day_time": "DOM 14:30",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 20, "X": 24, "2": 56}
+      },
+      {
+        "id": 7,
+        "home_team": "HAMMARBY",
+        "away_team": "VARNAMO",
+        "day_time": "DOM 16:00",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 70, "X": 18, "2": 12}
+      },
+      {
+        "id": 8,
+        "home_team": "GOTEBORG",
+        "away_team": "SIRIUS",
+        "day_time": "DOM 16:00",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 52, "X": 25, "2": 23}
+      },
+      {
+        "id": 9,
+        "home_team": "HALMSTADS",
+        "away_team": "AIK",
+        "day_time": "DOM 18:30",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 18, "X": 26, "2": 56}
+      },
+      {
+        "id": 10,
+        "home_team": "ELFSBORG",
+        "away_team": "HACKEN",
+        "day_time": "DOM 18:30",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 52, "X": 24, "2": 24}
+      },
+      {
+        "id": 11,
+        "home_team": "DJURGARDENS",
+        "away_team": "DEGERFORS",
+        "day_time": "LUN 19:00",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 59, "X": 23, "2": 18}
+      },
+      {
+        "id": 12,
+        "home_team": "VIKING",
+        "away_team": "STROMSGODSET",
+        "day_time": "LUN 19:00",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 75, "X": 15, "2": 10}
+      },
+      {
+        "id": 13,
+        "home_team": "VALERENGA",
+        "away_team": "FREDRIKSTAD",
+        "day_time": "LUN 21:00",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 44, "X": 28, "2": 28}
+      },
+      {
+        "id": 14,
+        "home_team": "KRISTIANSUND",
+        "away_team": "BODOGLIMT",
+        "day_time": "LUN 21:00",
+        "jugados": {"1": 0, "X": 0, "2": 0},
+        "lae": {"1": 0, "X": 0, "2": 0},
+        "probables": {"1": 13, "X": 18, "2": 69}
+      },
+      {
+        "id": 15,
+        "home_team": "TROMSO",
+        "away_team": "MOLDE",
+        "day_time": "MAR 20:00",
+        "jugados": {"0": 0, "1": 0, "2": 0, "M": 0},
+        "lae": {"0": 0, "1": 0, "2": 0, "M": 0},
+        "probables": {"0": 25, "1": 35, "2": 24, "M": 16}
+      }
+    ]
+}
